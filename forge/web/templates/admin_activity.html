@@ -1,0 +1,144 @@
+{% extends "app_base.html" %}
+{% block title %}Activity · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <h1>Activity</h1>
+    <p class="muted">
+      {% if platform_wide %}
+        Every action across all organisations on this platform.
+      {% else %}
+        Everything that has happened in {{ org.name }}.
+      {% endif %}
+    </p>
+  </div>
+  <div class="stat-row">
+    <div class="stat">
+      <span class="stat-n">{{ totals.events }}</span>
+      <span class="stat-l">events</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">{{ totals.actors }}</span>
+      <span class="stat-l">people</span>
+    </div>
+  </div>
+</div>
+
+<form method="get" action="/admin/activity" class="filterbar">
+  <select name="action" onchange="this.form.submit()" aria-label="Filter by action">
+    <option value="">All actions</option>
+    {% for opt in action_options %}
+    <option value="{{ opt.action }}" {% if opt.action == filter_action %}selected{% endif %}>
+      {{ opt.action }} ({{ opt.n }})
+    </option>
+    {% endfor %}
+  </select>
+
+  <input type="search" name="actor" value="{{ filter_actor }}"
+         placeholder="Filter by user email…" aria-label="Filter by user">
+
+  <button type="submit" class="btn btn-ghost btn-sm">Apply</button>
+
+  {#  Sign-ins and page views are recorded but hidden by default: they are the
+      audit trail, not what this page is for. #}
+  {% if show == 'all' %}
+  <a href="/admin/activity?action={{ filter_action }}&actor={{ filter_actor }}"
+     class="btn btn-ghost btn-sm">Hide sign-ins &amp; views</a>
+  {% else %}
+  <a href="/admin/activity?show=all&action={{ filter_action }}&actor={{ filter_actor }}"
+     class="btn btn-ghost btn-sm">Show sign-ins &amp; views</a>
+  {% endif %}
+
+  {% if filter_action or filter_actor %}
+  <a href="/admin/activity" class="btn btn-ghost btn-sm">Clear</a>
+  {% endif %}
+</form>
+
+<div class="card flush card-accent accent-teal">
+  <div class="sect">
+    <span class="sect-icon ic-teal">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 14.5l4-5 3.5 3 3-4.5 4.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 3v14h15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </span>
+    <div class="sect-text">
+      <h2>Event log</h2>
+      <p>Newest first. Sign-ins and views are hidden by default</p>
+    </div>
+  </div>
+
+  {% if rows %}
+  <table class="table table-flush">
+    <thead>
+      <tr>
+        <th>When</th>
+        <th>Action</th>
+        <th>User</th>
+        {% if platform_wide %}<th>Organisation</th>{% endif %}
+        <th>Detail</th>
+        <th>IP</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td class="nowrap muted" title="{{ row.created_at }}">
+          {{ row.created_at.strftime('%d %b %Y, %H:%M') }}
+        </td>
+        <td><span class="action-chip">{{ row.action }}</span></td>
+        <td>
+          {% if row.actor_email %}
+            <span class="who">{{ row.actor_name or row.actor_email }}</span>
+            {% if row.actor_name %}<br><small class="muted">{{ row.actor_email }}</small>{% endif %}
+          {% else %}
+            <span class="muted"> - </span>
+          {% endif %}
+        </td>
+        {% if platform_wide %}
+        <td class="muted">{{ row.org_name or ' - ' }}</td>
+        {% endif %}
+        <td class="detail">
+          {% if row.metadata %}
+            {% for k, v in row.metadata.items() %}
+            <span class="kv"><b>{{ k }}</b>{{ v }}</span>
+            {% endfor %}
+          {% else %}<span class="muted"> - </span>{% endif %}
+        </td>
+        <td class="muted nowrap">{{ row.ip or ' - ' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state pad">
+    {% if filter_action or filter_actor %}
+      <p class="muted">No events match that filter.</p>
+    {% else %}
+      <p><strong>No work recorded yet.</strong></p>
+      <p class="muted">
+        Uploads, extractions, builds and exports appear here as they happen - each with the file, the person, and the result. Sign-ins and settings
+        changes are recorded too; use <em>Show sign-ins &amp; views</em> above
+        to include them.
+      </p>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+
+{% if page > 1 or has_next %}
+<div class="pager">
+  {% if page > 1 %}
+  <a class="btn btn-ghost btn-sm"
+     href="/admin/activity?page={{ page - 1 }}&action={{ filter_action }}&actor={{ filter_actor }}">
+    ← Newer
+  </a>
+  {% endif %}
+  <span class="muted">Page {{ page }}</span>
+  {% if has_next %}
+  <a class="btn btn-ghost btn-sm"
+     href="/admin/activity?page={{ page + 1 }}&action={{ filter_action }}&actor={{ filter_actor }}">
+    Older →
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

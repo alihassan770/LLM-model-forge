@@ -1,0 +1,106 @@
+{% extends "app_base.html" %}
+{% block title %}Your account · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <h1>Your account</h1>
+    <p class="muted">Your name, your password, and where you sign in.</p>
+  </div>
+</div>
+
+{% include "_set_tabs.html" %}
+
+<div class="who-strip">
+  <span class="who-avatar">{{ (user.name or user.email)[:1] | upper }}</span>
+  <span class="who-text">
+    <span class="who-name">{{ user.name or user.email.split('@')[0] }}</span>
+    <span class="who-meta">
+      {{- user.email -}}
+      {%- if user.last_login_at %} · last signed in
+        {{- ' ' }}{{ user.last_login_at.strftime('%d %b %Y, %H:%M') }}
+      {%- endif -%}
+    </span>
+  </span>
+  <span class="who-role">{{ org.role }} of {{ org.name }}</span>
+</div>
+
+<div class="set-panel">
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Display name</h2>
+      <p>Shown on your uploads, your models and in the activity log.</p>
+    </div>
+    <form method="post" action="/account/name" class="set-control">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      {% if name_saved %}
+      <div class="alert alert-ok">Saved - you are shown as <b>{{ name_saved }}</b>.</div>
+      {% endif %}
+      {% if name_error %}<div class="alert alert-error">{{ name_error }}</div>{% endif %}
+      <label class="field">
+        <input type="text" name="name" maxlength="120" autocomplete="name"
+               value="{{ name_value if name_value is defined else (user.name or '') }}"
+               placeholder="Your name">
+      </label>
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary">Save name</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Password</h2>
+      <p>At least 6 characters. Your current one is required.</p>
+    </div>
+    <form method="post" action="/account/password" class="set-control">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      {% if password_saved %}
+      <div class="alert alert-ok">
+        Changed. Your other devices stay signed in - you proved you knew the
+        old one.
+      </div>
+      {% endif %}
+      {% if password_error %}
+      <div class="alert alert-error">{{ password_error }}</div>
+      {% endif %}
+      <label class="field">
+        <span>Current password</span>
+        <input type="password" name="current" autocomplete="current-password" required>
+      </label>
+      <label class="field">
+        <span>New password</span>
+        <input type="password" name="password" autocomplete="new-password"
+               minlength="6" required>
+      </label>
+      <label class="field">
+        <span>New password again</span>
+        <input type="password" name="confirm" autocomplete="new-password"
+               minlength="6" required>
+      </label>
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary">Change password</button>
+      </div>
+      <small class="muted">
+        Forgotten it instead? <a href="/forgot">Get a reset link by email</a>.
+      </small>
+    </form>
+  </div>
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Sign-in email</h2>
+      <p>{{ user.email }}</p>
+    </div>
+    <div class="set-control is-wide">
+      <p>
+        Not changed from here. Your email is the identity every invite,
+        activity entry and password reset is attached to, so swapping it
+        safely means proving the new address before the old one stops
+        working - a separate step we have not built yet. Ask and it goes on
+        the list.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

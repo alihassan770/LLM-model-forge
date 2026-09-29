@@ -1,0 +1,354 @@
+{% extends "app_base.html" %}
+{% block title %}Workspace settings · Model Forge{% endblock %}
+
+{% block page %}
+{% set editable = org.role in ('admin', 'manager') %}
+
+<div class="page-head">
+  <div>
+    <h1>Workspace</h1>
+    <p class="muted">Applies to everyone in {{ org.name }}.</p>
+  </div>
+</div>
+
+{% include "_set_tabs.html" %}
+
+{% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+{% if warn %}<div class="alert alert-warn">{{ warn }}</div>{% endif %}
+
+{% if test_result %}
+  {% if test_result.ok %}
+  <div class="alert alert-ok">
+    <strong>Saved &amp; API key verified.</strong>
+    Everyone in {{ org.name }} now uses {{ saved_model }}.
+  </div>
+  {% else %}
+  <div class="alert alert-error">
+    <strong>Not saved.</strong> {{ test_result.message }}
+  </div>
+  {% endif %}
+{% endif %}
+
+{% if not editable %}
+<div class="alert alert-info">
+  You are signed in as <b>{{ org.role }}</b>. Only an admin or manager can
+  change these.
+</div>
+{% endif %}
+
+<div class="set-panel">
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Workspace name</h2>
+      <p>What everyone here sees, on every page.</p>
+    </div>
+    <form method="post" action="/settings/org" class="set-control">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      {% if org_saved %}
+      <div class="alert alert-ok">Now called <b>{{ org_saved }}</b>.</div>
+      {% endif %}
+      {% if org_error %}<div class="alert alert-error">{{ org_error }}</div>{% endif %}
+      <label class="field">
+        <input type="text" name="org_name" maxlength="120"
+               value="{{ org_value if org_value is defined else org.name }}"
+               {% if not editable %}disabled{% endif %}>
+      </label>
+      {% if editable %}
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary">Save name</button>
+      </div>
+      {% endif %}
+    </form>
+  </div>
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>File storage</h2>
+      <p>Where this workspace's photos, models and bills are kept.</p>
+    </div>
+    <form method="post" action="/settings/storage" class="set-control is-wide">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+      {% if storage_saved %}
+      <div class="alert alert-ok">{{ storage_saved }}</div>
+      {% endif %}
+      {% if storage_warn %}
+      <div class="alert alert-warn">{{ storage_warn }}</div>
+      {% endif %}
+      {% if storage_error %}
+      <div class="alert alert-error">
+        <strong>Not saved.</strong> {{ storage_error }}
+      </div>
+      {% endif %}
+
+      <p class="store-now">
+        {% if storage.bucket %}
+          Currently <b>s3://{{ storage.bucket }}/{{ storage.prefix }}</b>
+          {% if storage.region %}in {{ storage.region }}{% endif %}.
+        {% else %}
+          Currently using the server's own storage
+          (<b>{{ deployment_storage.backend }}</b>).
+          {% if deployment_storage.backend == 'local' %}
+          <span class="store-warn">Local storage is wiped whenever the server
+          redeploys, so set a bucket before you rely on it.</span>
+          {% endif %}
+        {% endif %}
+      </p>
+
+      <div class="store-grid">
+        <label class="field">
+          <span>Bucket</span>
+          <input type="text" name="bucket" placeholder="my-company-models"
+                 value="{{ (storage_typed.bucket if storage_typed is defined else storage.bucket) or '' }}"
+                 {% if not editable %}disabled{% endif %}>
+        </label>
+        <label class="field">
+          <span>Region</span>
+          <input type="text" name="region" placeholder="eu-west-2"
+                 value="{{ (storage_typed.region if storage_typed is defined else storage.region) or '' }}"
+                 {% if not editable %}disabled{% endif %}>
+        </label>
+        <label class="field">
+          <span>Folder inside the bucket</span>
+          <input type="text" name="prefix" placeholder="forge"
+                 value="{{ (storage_typed.prefix if storage_typed is defined else storage.prefix) or 'forge' }}"
+                 {% if not editable %}disabled{% endif %}>
+        </label>
+        <label class="field">
+          <span>Endpoint <span class="muted">(only if not AWS)</span></span>
+          <input type="text" name="endpoint"
+                 placeholder="https://acct.r2.cloudflarestorage.com"
+                 value="{{ (storage_typed.endpoint if storage_typed is defined else storage.endpoint) or '' }}"
+                 {% if not editable %}disabled{% endif %}>
+        </label>
+      </div>
+
+      <div class="key-state">
+        {% if storage.key_status.set %}
+          <span class="key-dot ok"></span>
+          <code>{{ storage.key_status.hint }}</code>
+        {% else %}
+          <span class="key-dot off"></span>
+          <span class="muted">No access key stored</span>
+        {% endif %}
+      </div>
+
+      {% if editable %}
+      <div class="store-grid">
+        <label class="field">
+          <span>Access key ID</span>
+          <input type="text" name="access_key_id" autocomplete="off"
+                 placeholder="{% if storage.key_status.set %}Leave blank to keep the stored key{% else %}AKIA…{% endif %}">
+        </label>
+        <label class="field">
+          <span>Secret access key</span>
+          <input type="password" name="secret_access_key" autocomplete="off"
+                 placeholder="{% if storage.key_status.set %}Leave blank to keep it{% else %}…{% endif %}">
+        </label>
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary">Save &amp; verify bucket</button>
+      </div>
+      <small class="muted">
+        The bucket is proved writable before anything is saved: one small
+        object is written and deleted with the key you give. Clearing the
+        bucket field goes back to the server's own storage. Files already
+        uploaded stay where they are, so switching applies to what comes next.
+      </small>
+      {% endif %}
+    </form>
+  </div>
+
+  {#  Provider, model, thinking and key are one form spread over four rows - one button saves and verifies them together, as asked for.
+
+      A <form> wrapping the rows would sit between .set-panel and .set-row and
+      break the grid, so the form is empty here and each control joins it with
+      `form="ai-form"`. That is what the attribute is for, and it keeps every
+      row a direct child of the panel. #}
+  <form method="post" action="/settings/ai" id="ai-form"></form>
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Provider</h2>
+      <p>Who reads your photos and spec sheets.</p>
+    </div>
+    <div class="set-control">
+      <input type="hidden" name="csrf_token" form="ai-form"
+             value="{{ session.csrf_token }}">
+      <div class="provider-grid">
+        {% for pid, prov in providers.items() %}
+        <label class="provider-opt {% if config.provider.id == pid %}is-on{% endif %}">
+          <input type="radio" name="provider" value="{{ pid }}" form="ai-form"
+                 {% if config.provider.id == pid %}checked{% endif %}
+                 {% if not editable %}disabled{% endif %}>
+          <span class="provider-body">
+            <span class="provider-name">{{ prov.label }}</span>
+          </span>
+          <span class="provider-check"></span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Model</h2>
+      <p>Only models that can read an image are listed - every stage of this
+         app starts by looking at a picture.</p>
+    </div>
+    <div class="set-control">
+      {% for pid, prov in providers.items() if not prov.dynamic %}
+      <div class="model-block" data-models="{{ pid }}"
+           {% if config.provider.id != pid %}hidden{% endif %}>
+        <label class="field">
+          <select name="model" form="ai-form"
+                  {% if not editable or config.provider.id != pid %}disabled{% endif %}>
+            {% for m in prov.models if m.vision %}
+            <option value="{{ m.id }}"
+                    {% if config.provider.id == pid and config.model.id == m.id %}selected{% endif %}>
+              {{ m.label }}{% if m.reasoning %} · thinking{% endif %}
+            </option>
+            {% endfor %}
+          </select>
+          {% for m in prov.models if m.vision %}
+          {% if config.provider.id == pid and config.model.id == m.id and m.note %}
+          <small class="muted">{{ m.note }}</small>
+          {% endif %}
+          {% endfor %}
+        </label>
+      </div>
+      {% endfor %}
+
+      {#  OpenRouter is not a list of three, it is a few hundred that change
+          weekly, so it gets a different control: a filter box over a grouped
+          dropdown, and a field for typing an id the catalogue has not caught
+          up with yet. Everything else on this page treats it as any other
+          provider. #}
+      <div class="model-block" data-models="openrouter"
+           {% if config.provider.id != 'openrouter' %}hidden{% endif %}>
+        {% if or_vendors %}
+        <label class="field">
+          <input type="search" id="or-filter" autocomplete="off"
+                 placeholder="Filter models — try “claude”, “gpt”, “vision”"
+                 {% if not editable %}disabled{% endif %}>
+        </label>
+        <label class="field">
+          <select name="model" id="or-model" size="10" form="ai-form"
+                  {% if not editable or config.provider.id != 'openrouter' %}disabled{% endif %}>
+            {% for vendor, models in or_vendors %}
+            <optgroup label="{{ vendor }}">
+              {% for m in models %}
+              <option value="{{ m.id }}"
+                      {% if config.provider.id == 'openrouter' and config.model.id == m.id %}selected{% endif %}>
+                {{ m.label }}{% if m.reasoning %} · thinking{% endif %}{% if m.price_in %} · ${{ '%.2f'|format(m.price_in) }}/${{ '%.2f'|format(m.price_out) }} per 1M{% else %} · free{% endif %}
+              </option>
+              {% endfor %}
+            </optgroup>
+            {% endfor %}
+          </select>
+        </label>
+        <p class="muted" id="or-count">
+          {{ or_status.count }} models fetched from OpenRouter; only the
+          {{ or_vendors | map(attribute=1) | map('length') | sum }} that can
+          read an image are listed.
+        </p>
+        {% else %}
+        <p class="muted">
+          The model list could not be fetched from OpenRouter{% if or_status.error %}
+          ({{ or_status.error }}){% endif %}. You can still enter a model id below.
+        </p>
+        {% endif %}
+
+        <label class="field">
+          <span>Or enter any OpenRouter model id</span>
+          <input type="text" name="model_custom" autocomplete="off" form="ai-form"
+                 placeholder="e.g. anthropic/claude-sonnet-4.5"
+                 {% if not editable %}disabled{% endif %}>
+          <small class="muted">Overrides the selection above. Use this for a
+            model released since the list was fetched, or one private to your
+            account.</small>
+        </label>
+
+        {% if config.provider.id == 'openrouter' and config.model.note %}
+        <small class="muted">{{ config.model.note }}</small>
+        {% endif %}
+
+        {#  Its own form: this posts to the refresh endpoint, not to the
+            save-and-verify one, and a button inside #ai-form would submit
+            that instead. #}
+        {% if editable %}
+        <form method="post" action="/settings/ai/models/refresh" class="btn-row">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+          <button type="submit" class="btn btn-ghost btn-sm">Refresh model list</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if config.model.reasoning %}
+  <div class="set-row">
+    <div class="set-label">
+      <h2>Thinking</h2>
+      <p>How hard the model works before answering.</p>
+    </div>
+    <div class="set-control is-wide">
+      {#  Four radios styled as one segmented control rather than a dropdown.
+          All four levels and their trade-off are visible at once, which is
+          the point: a menu you have to open hides the very thing you are
+          choosing between. The value posts under `effort`, exactly as the
+          select did.  #}
+      <div class="seg" role="radiogroup" aria-label="Thinking level">
+        {% for level in config.model.reasoning_efforts %}
+        <label class="seg-opt {% if config.effort == level %}is-on{% endif %}">
+          <input type="radio" name="effort" value="{{ level }}" form="ai-form"
+                 data-note="{{ effort_label.get(level, '') }}"
+                 {% if config.effort == level %}checked{% endif %}
+                 {% if not editable %}disabled{% endif %}>
+          <span class="seg-name">{{ level|capitalize }}</span>
+          <span class="seg-hint">{{ effort_short.get(level, '') }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <p class="seg-note" id="effort-note">{{ effort_label.get(config.effort, '') }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="set-row">
+    <div class="set-label">
+      <h2>API key</h2>
+      <p>Checked against {{ config.provider.label }} before anything is saved.</p>
+    </div>
+    <div class="set-control">
+      <div class="key-state">
+        {% if config.key_status.set %}
+          <span class="key-dot ok"></span>
+          <code>{{ config.key_status.hint }}</code>
+        {% else %}
+          <span class="key-dot off"></span>
+          <span class="muted">Not set</span>
+        {% endif %}
+      </div>
+
+      {% if editable %}
+      <label class="field">
+        <input type="password" name="api_key" autocomplete="off" form="ai-form"
+               placeholder="{% if config.key_status.set %}Enter a new key to replace it{% else %}{{ config.provider.key_prefix }}…{% endif %}">
+      </label>
+      <div class="btn-row">
+        <button type="submit" form="ai-form" class="btn btn-primary">
+          Save &amp; verify
+        </button>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('settings.js') }}" defer></script>
+{% endblock %}

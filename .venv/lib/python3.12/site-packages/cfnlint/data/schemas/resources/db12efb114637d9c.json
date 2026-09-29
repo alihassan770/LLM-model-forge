@@ -1,0 +1,326 @@
+{
+ "additionalIdentifiers": [
+  [
+   "/properties/InstanceId",
+   "/properties/Namespace",
+   "/properties/Name"
+  ]
+ ],
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/InstanceId",
+  "/properties/Namespace",
+  "/properties/Name",
+  "/properties/Schema",
+  "/properties/PartitionSpec"
+ ],
+ "definitions": {
+  "DataLakeDatasetPartitionField": {
+   "additionalProperties": false,
+   "description": "The partition field details.",
+   "properties": {
+    "Name": {
+     "description": "The name of the partition field.",
+     "maxLength": 100,
+     "minLength": 1,
+     "pattern": "^[a-z0-9_]+$",
+     "type": "string"
+    },
+    "Transform": {
+     "additionalProperties": false,
+     "description": "The transformation of the partition field.",
+     "properties": {
+      "Type": {
+       "description": "The type of partitioning transformation.",
+       "enum": [
+        "YEAR",
+        "MONTH",
+        "DAY",
+        "HOUR",
+        "IDENTITY"
+       ],
+       "type": "string"
+      }
+     },
+     "required": [
+      "Type"
+     ],
+     "type": "object"
+    }
+   },
+   "required": [
+    "Name",
+    "Transform"
+   ],
+   "type": "object"
+  },
+  "DataLakeDatasetPrimaryKeyField": {
+   "additionalProperties": false,
+   "description": "The primary key field details.",
+   "properties": {
+    "Name": {
+     "description": "The name of the primary key field.",
+     "maxLength": 100,
+     "minLength": 1,
+     "pattern": "^[a-z0-9_]+$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "Name"
+   ],
+   "type": "object"
+  },
+  "DataLakeDatasetSchemaField": {
+   "additionalProperties": false,
+   "description": "The dataset field details.",
+   "properties": {
+    "IsRequired": {
+     "description": "Indicate if the field is required or not.",
+     "type": "boolean"
+    },
+    "Name": {
+     "description": "The dataset field name.",
+     "maxLength": 100,
+     "minLength": 1,
+     "pattern": "^[a-z0-9_]+$",
+     "type": "string"
+    },
+    "Type": {
+     "description": "The dataset field type.",
+     "enum": [
+      "INT",
+      "DOUBLE",
+      "STRING",
+      "TIMESTAMP",
+      "LONG"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "Name",
+    "Type",
+    "IsRequired"
+   ],
+   "type": "object"
+  },
+  "Tag": {
+   "additionalProperties": false,
+   "description": "A key-value pair to associate with a resource.",
+   "properties": {
+    "Key": {
+     "description": "The key name of the tag.",
+     "maxLength": 128,
+     "minLength": 1,
+     "type": "string"
+    },
+    "Value": {
+     "description": "The value for the tag.",
+     "maxLength": 256,
+     "minLength": 0,
+     "type": "string"
+    }
+   },
+   "required": [
+    "Key",
+    "Value"
+   ],
+   "type": "object"
+  }
+ },
+ "description": "Represents an AWS Supply Chain data lake dataset.",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "scn:CreateDataLakeDataset",
+    "scn:GetDataLakeDataset",
+    "scn:TagResource",
+    "scn:ListTagsForResource"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "scn:DeleteDataLakeDataset",
+    "scn:GetDataLakeDataset"
+   ]
+  },
+  "list": {
+   "handlerSchema": {
+    "properties": {
+     "InstanceId": {
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+      "type": "string"
+     },
+     "Namespace": {
+      "maxLength": 50,
+      "minLength": 1,
+      "pattern": "^[a-z0-9_]+$",
+      "type": "string"
+     }
+    },
+    "required": [
+     "InstanceId",
+     "Namespace"
+    ]
+   },
+   "permissions": [
+    "scn:ListDataLakeDatasets"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "scn:GetDataLakeDataset",
+    "scn:ListTagsForResource"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "scn:UpdateDataLakeDataset",
+    "scn:GetDataLakeDataset",
+    "scn:TagResource",
+    "scn:UntagResource",
+    "scn:ListTagsForResource"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Arn"
+ ],
+ "properties": {
+  "Arn": {
+   "description": "The Amazon Resource Name (ARN) of the dataset.",
+   "maxLength": 1011,
+   "minLength": 20,
+   "pattern": "^arn:aws:scn(?::([a-z0-9-]+):([0-9]+):instance)?/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})[-_./A-Za-z0-9]*$",
+   "type": "string"
+  },
+  "CreatedTime": {
+   "description": "The creation time of the dataset.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "Description": {
+   "description": "The description of the dataset.",
+   "maxLength": 500,
+   "minLength": 1,
+   "type": "string"
+  },
+  "InstanceId": {
+   "description": "The Amazon Web Services Supply Chain instance identifier.",
+   "maxLength": 36,
+   "minLength": 36,
+   "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+   "type": "string"
+  },
+  "LastModifiedTime": {
+   "description": "The last modified time of the dataset.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "Name": {
+   "description": "The name of the dataset.",
+   "maxLength": 75,
+   "minLength": 1,
+   "pattern": "^[a-z0-9_]+$",
+   "type": "string"
+  },
+  "Namespace": {
+   "description": "The namespace of the dataset.",
+   "maxLength": 50,
+   "minLength": 1,
+   "pattern": "^[a-z0-9_]+$",
+   "type": "string"
+  },
+  "PartitionSpec": {
+   "additionalProperties": false,
+   "description": "The partition specification of the dataset.",
+   "properties": {
+    "Fields": {
+     "description": "The partition fields.",
+     "items": {
+      "$ref": "#/definitions/DataLakeDatasetPartitionField"
+     },
+     "maxItems": 10,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "Fields"
+   ],
+   "type": "object"
+  },
+  "Schema": {
+   "additionalProperties": false,
+   "description": "The schema of the dataset.",
+   "properties": {
+    "Fields": {
+     "description": "The list of field details of the dataset schema.",
+     "items": {
+      "$ref": "#/definitions/DataLakeDatasetSchemaField"
+     },
+     "maxItems": 500,
+     "minItems": 1,
+     "type": "array"
+    },
+    "Name": {
+     "description": "The name of the dataset schema.",
+     "maxLength": 100,
+     "minLength": 1,
+     "pattern": "^[A-Za-z0-9]+$",
+     "type": "string"
+    },
+    "PrimaryKeys": {
+     "description": "The list of primary key fields for the dataset.",
+     "items": {
+      "$ref": "#/definitions/DataLakeDatasetPrimaryKeyField"
+     },
+     "maxItems": 20,
+     "minItems": 1,
+     "type": "array"
+    }
+   },
+   "required": [
+    "Name",
+    "Fields"
+   ],
+   "type": "object"
+  },
+  "Tags": {
+   "description": "The tags for the dataset.",
+   "insertionOrder": false,
+   "items": {
+    "$ref": "#/definitions/Tag"
+   },
+   "maxItems": 200,
+   "type": "array",
+   "uniqueItems": true
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/CreatedTime",
+  "/properties/LastModifiedTime"
+ ],
+ "required": [
+  "InstanceId",
+  "Namespace",
+  "Name"
+ ],
+ "tagging": {
+  "cloudFormationSystemTags": true,
+  "permissions": [
+   "scn:TagResource",
+   "scn:UntagResource",
+   "scn:ListTagsForResource"
+  ],
+  "tagOnCreate": true,
+  "tagProperty": "/properties/Tags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::SCN::Dataset"
+}

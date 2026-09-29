@@ -1,0 +1,853 @@
+{
+ "assumptions": [
+  "The drawing's two seat labels, 43 cm and 46 cm, are taken as seat depth 43 cm and seat width 46 cm, because the padded back above the seat is itself 43 cm wide and a seat is normally wider than its back. If they are the other way round the seat is 3 cm out in each direction.",
+  "The 6 cm label near the left arm is read as the armrest pad width, and the separate 6 cm label at the seat front is read as the seat cushion thickness.",
+  "The 11 cm label near the seat back could not be tied to a single edge; it is taken to dimension the back support upright behind the cushion (seat surface to bottom of the back pad). It is not used as a primary dimension for any part.",
+  "Back cushion thickness is assumed equal to the seat cushion thickness (6 cm) at low confidence and is raised as a blocking question.",
+  "Floor to the top of the base hub is assumed to be about 22 cm; this is what makes the 41 - 51 cm seat height range consistent with a 19 - 29 cm gas lift.",
+  "Castor wheels are assumed 5 cm diameter, typical for a chair with a 62 cm base span.",
+  "Seat deck, mechanism plate, hub and spoke sections are not visible in the drawing and are estimated inside normal ranges for this class of chair.",
+  "The five spokes are drawn tapering and swept downward; they are modelled as straight constant-section boxes for simplicity.",
+  "Twin-wheel castors are modelled as a single wheel cylinder plus a fork; the second wheel of each castor is not listed separately.",
+  "All upholstery is assumed to be polyester fabric over moulded foam; the drawing is line art with no material callout.",
+  "Maximum user weight of 130 kg and the +/- 2 cm tolerance noted on the sheet are recorded but do not affect part geometry."
+ ],
+ "joints": [
+  {
+   "count": 2,
+   "id": "joint.arm_to_deck",
+   "notes": "Each arm loop bolts up into the underside of the seat deck through the mechanism plate.",
+   "parts": [
+    "arm.support",
+    "seat.deck"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 2,
+   "id": "joint.armpad_to_arm",
+   "notes": "Pad screws down onto the top of the arm loop; screwed rather than glued so the pad can be replaced.",
+   "parts": [
+    "arm.pad",
+    "arm.support"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 4,
+   "id": "joint.back_to_deck",
+   "notes": "Back frame fixed to the seat deck / mechanism with bolts through a bracket.",
+   "parts": [
+    "back.support",
+    "seat.deck"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 4,
+   "id": "joint.backcushion_to_back",
+   "notes": "Back pad screwed through the shell onto the support; some chairs use clips, screws assumed.",
+   "parts": [
+    "back.cushion",
+    "back.support"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 4,
+   "id": "joint.cushion_to_deck",
+   "notes": "Seat pad fixed down onto the deck with screws or clips.",
+   "parts": [
+    "seat.cushion",
+    "seat.deck"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 4,
+   "id": "joint.mechanism_to_deck",
+   "notes": "Mechanism plate bolted to the underside of the seat deck.",
+   "parts": [
+    "mechanism.plate",
+    "seat.deck"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 1,
+   "id": "joint.lever_to_mechanism",
+   "notes": "Lever paddle clips into the mechanism housing.",
+   "parts": [
+    "lift.lever",
+    "mechanism.plate"
+   ],
+   "type": "press_fit"
+  },
+  {
+   "count": 1,
+   "id": "joint.lift_to_mechanism",
+   "notes": "Taper of the gas spring pressed into the taper socket of the mechanism.",
+   "parts": [
+    "lift.cylinder",
+    "mechanism.plate"
+   ],
+   "type": "press_fit"
+  },
+  {
+   "count": 1,
+   "id": "joint.lift_to_hub",
+   "notes": "Gas spring pressed into the moulded hub of the five-star base.",
+   "parts": [
+    "lift.cylinder",
+    "base.hub"
+   ],
+   "type": "press_fit"
+  },
+  {
+   "count": 5,
+   "id": "joint.spoke_to_hub",
+   "notes": "Spokes joined to the hub. If the base is moulded nylon rather than steel these are moulded integrally - material recorded as nylon, so treat as a one-piece joint.",
+   "parts": [
+    "base.spoke",
+    "base.hub"
+   ],
+   "type": "welded"
+  },
+  {
+   "count": 5,
+   "id": "joint.caster_to_spoke",
+   "notes": "Castor stem pushes into the socket at the end of each spoke.",
+   "parts": [
+    "caster.fork",
+    "base.spoke"
+   ],
+   "type": "press_fit"
+  },
+  {
+   "count": 5,
+   "id": "joint.wheel_to_fork",
+   "notes": "Wheel on a rivet/axle through the fork.",
+   "parts": [
+    "caster.wheel",
+    "caster.fork"
+   ],
+   "type": "bolted"
+  }
+ ],
+ "missing_dimensions": [
+  {
+   "blocking": true,
+   "dimension": "thickness",
+   "part_id": "back.cushion",
+   "question": "How thick is the padded back of the chair, measured at its edge where it is not squashed?",
+   "region": {
+    "found": true,
+    "h": 0.3,
+    "image_index": 0,
+    "w": 0.3,
+    "x": 0.21,
+    "y": 0.17
+   },
+   "suggested_max": 10.0,
+   "suggested_min": 3.0,
+   "unit": "cm",
+   "why_needed": "The back pad is modelled as a cushion, which needs a thickness as well as a width and height, or it cannot be generated at all."
+  },
+  {
+   "blocking": true,
+   "dimension": "thickness",
+   "part_id": "arm.pad",
+   "question": "How thick is the armrest pad - the distance through the soft pad on top of the arm, top to bottom?",
+   "region": {
+    "found": true,
+    "h": 0.15,
+    "image_index": 0,
+    "w": 0.22,
+    "x": 0.5,
+    "y": 0.24
+   },
+   "suggested_max": 4.0,
+   "suggested_min": 1.0,
+   "unit": "cm",
+   "why_needed": "The arm pad is a cushion primitive and needs a thickness before it can be built; only its length and width are labelled."
+  },
+  {
+   "blocking": true,
+   "dimension": "diameter",
+   "part_id": "lift.cylinder",
+   "question": "How wide is the vertical gas-lift post under the seat, measured across the black column just above the star base?",
+   "region": {
+    "found": true,
+    "h": 0.2,
+    "image_index": 0,
+    "w": 0.16,
+    "x": 0.42,
+    "y": 0.58
+   },
+   "suggested_max": 8.0,
+   "suggested_min": 3.0,
+   "unit": "cm",
+   "why_needed": "A cylinder needs a diameter and a length; the drawing gives neither, so the post cannot be modelled."
+  },
+  {
+   "blocking": true,
+   "dimension": "diameter",
+   "part_id": "base.hub",
+   "question": "How wide is the centre block of the five-star base, measured across the middle where the five legs meet?",
+   "region": {
+    "found": true,
+    "h": 0.16,
+    "image_index": 0,
+    "w": 0.22,
+    "x": 0.39,
+    "y": 0.62
+   },
+   "suggested_max": 16.0,
+   "suggested_min": 6.0,
+   "unit": "cm",
+   "why_needed": "The hub is the cylinder at the middle of the base and cannot be generated without a diameter and a height."
+  },
+  {
+   "blocking": true,
+   "dimension": "diameter",
+   "part_id": "caster.wheel",
+   "question": "How tall is one castor wheel from the floor to the top of the wheel, not counting the metal fork above it?",
+   "region": {
+    "found": true,
+    "h": 0.16,
+    "image_index": 0,
+    "w": 0.16,
+    "x": 0.38,
+    "y": 0.8
+   },
+   "suggested_max": 8.0,
+   "suggested_min": 3.0,
+   "unit": "cm",
+   "why_needed": "The castors set the height of the whole base; without a wheel diameter the floor-to-seat heights in the drawing cannot be reconciled with the geometry."
+  },
+  {
+   "blocking": true,
+   "dimension": "width",
+   "part_id": "back.support",
+   "question": "Looking from behind the chair, how wide is the rigid back frame that the padded back is fixed to, at its widest point?",
+   "region": {
+    "found": true,
+    "h": 0.28,
+    "image_index": 0,
+    "w": 0.3,
+    "x": 0.22,
+    "y": 0.28
+   },
+   "suggested_max": 48.0,
+   "suggested_min": 30.0,
+   "unit": "cm",
+   "why_needed": "The back frame is a box and needs a width, height and depth; only the pad in front of it is dimensioned in the drawing."
+  },
+  {
+   "blocking": true,
+   "dimension": "diameter",
+   "part_id": "arm.support",
+   "question": "How thick is the arm loop - the bar that runs from the seat up to the armrest? Measure across the bar itself.",
+   "region": {
+    "found": true,
+    "h": 0.22,
+    "image_index": 0,
+    "w": 0.2,
+    "x": 0.5,
+    "y": 0.3
+   },
+   "suggested_max": 4.0,
+   "suggested_min": 1.5,
+   "unit": "cm",
+   "why_needed": "The arm bracket is modelled as a tube, which needs a section diameter as well as its 19 cm height."
+  },
+  {
+   "blocking": false,
+   "dimension": "thickness",
+   "part_id": "seat.deck",
+   "question": "How thick is the seat pan under the cushion, measured at the front edge of the seat just below the padding?",
+   "region": {
+    "found": true,
+    "h": 0.16,
+    "image_index": 0,
+    "w": 0.35,
+    "x": 0.3,
+    "y": 0.44
+   },
+   "suggested_max": 5.0,
+   "suggested_min": 1.0,
+   "unit": "cm",
+   "why_needed": "This is the panel that the arms, back and gas lift all attach to; a default of 2 cm is assumed but it controls how low the cushion sits."
+  }
+ ],
+ "object": {
+  "category": "chair",
+  "style_notes": "Modern lightweight task chair drawn in a single line-art elevation with a part callout. Softly rounded upholstered back and seat, slim loop arms with oval pads, black nylon five-star base on twin-wheel castors, height adjustable on a gas spring with a lever under the seat. Drawing states a manufacturing tolerance of +/- 2 cm and a maximum user weight of 130 kg.",
+  "subtype": "swivel task/office chair with arms, gas lift and five-star castor base",
+  "summary": "An upholstered swivel office chair with height-adjustable gas lift, loop arms and a five-star castor base."
+ },
+ "overall": [
+  {
+   "confidence": 0.95,
+   "name": "height_min",
+   "note": "Overall height label at the left of the drawing reads 77 - 87 cm; 77 cm is with the gas lift fully down.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 77.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "height_max",
+   "note": "Upper end of the 77 - 87 cm overall height range.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 87.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "seat_height_min",
+   "note": "Seat height label at the left reads 41 - 51 cm; 41 cm is the lowest position, measured from floor to top of seat.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 41.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "seat_height_max",
+   "note": "Upper end of the 41 - 51 cm seat height range, i.e. 10 cm of gas-lift travel.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 51.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "base_diameter",
+   "note": "Label under the castors reads 62 cm; this is the castor-to-castor span of the five-star base, not the circle the castors swing in.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 62.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "tolerance",
+   "note": "The drawing states +/- 2 cm on the quoted dimensions.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 2.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "backrest_width",
+   "note": "43 cm arrow across the top of the backrest.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 43.0
+  },
+  {
+   "confidence": 0.85,
+   "name": "backrest_height",
+   "note": "25 cm arrow running down the backrest side; read as the padded back height.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 25.0
+  },
+  {
+   "confidence": 0.8,
+   "name": "seat_width",
+   "note": "One of the two seat labels is 46 cm and the other 43 cm; 46 cm is taken as the side-to-side width because the seat is normally wider than the 43 cm back. See assumptions.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 46.0
+  },
+  {
+   "confidence": 0.8,
+   "name": "seat_depth",
+   "note": "Taken as the front-to-back seat depth; the two seat labels are easily swapped, see assumptions.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 43.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "armrest_height_above_seat",
+   "note": "19 cm arrow from the seat surface up to the underside of the arm pad.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 19.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "armrest_pad_length",
+   "note": "26 cm arrow across the top of the right arm pad.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 26.0
+  },
+  {
+   "confidence": 0.7,
+   "name": "armrest_pad_width",
+   "note": "The 6 cm label at the left of the chair points at the arm pad; read as pad width. The second 6 cm label points at the seat edge and is read as cushion thickness.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 6.0
+  },
+  {
+   "confidence": 0.75,
+   "name": "seat_cushion_thickness",
+   "note": "6 cm arrow against the front edge of the seat cushion.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 6.0
+  }
+ ],
+ "parts": [
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.8,
+     "name": "width",
+     "note": "Side-to-side seat width; see assumptions about the 43/46 cm pairing.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 46.0
+    },
+    {
+     "confidence": 0.8,
+     "name": "depth",
+     "note": "Front-to-back seat depth.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 43.0
+    },
+    {
+     "confidence": 0.75,
+     "name": "thickness",
+     "note": "Taken from the 6 cm label at the seat front edge.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 6.0
+    }
+   ],
+   "display_name": "Seat cushion",
+   "id": "seat.cushion",
+   "material": "fabric_polyester_over_foam",
+   "notes": "Moulded foam cushion, fabric upholstered, slightly curved front edge. Contoured sides are ignored - modelled as a rectangular cushion.",
+   "parent_id": "",
+   "primitive": "cushion",
+   "role": "upholstery"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.7,
+     "name": "length",
+     "note": "Matches the seat depth.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 43.0
+    },
+    {
+     "confidence": 0.7,
+     "name": "width",
+     "note": "Matches the seat width.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 46.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "thickness",
+     "note": "Pan thickness assumed; not visible in the drawing.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.0
+    }
+   ],
+   "display_name": "Seat deck / under-seat pan",
+   "id": "seat.deck",
+   "material": "pp_glassfilled",
+   "notes": "Rigid shell under the seat cushion. Not visible in the drawing; assumed to exist because the arms, back and gas lift all attach to it.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.9,
+     "name": "width",
+     "note": "43 cm label across the top of the back.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 43.0
+    },
+    {
+     "confidence": 0.85,
+     "name": "height",
+     "note": "25 cm label down the back side.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 25.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "thickness",
+     "note": "Not labelled; assumed the same as the seat cushion.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 6.0
+    }
+   ],
+   "display_name": "Backrest cushion",
+   "id": "back.cushion",
+   "material": "fabric_polyester_over_foam",
+   "notes": "Padded back panel, waisted slightly at the bottom. Thickness is a pure assumption - raised as a question.",
+   "parent_id": "",
+   "primitive": "cushion",
+   "role": "upholstery"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "width",
+     "note": "Assumed slightly narrower than the 43 cm back cushion.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 40.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Assumed; the 11 cm label near the seat back may describe part of this upright.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 30.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "depth",
+     "note": "Assumed moulded shell thickness.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 3.0
+    }
+   ],
+   "display_name": "Back support / back frame",
+   "id": "back.support",
+   "material": "pp_glassfilled",
+   "notes": "The upright shell behind the back cushion that carries the backrest and ties into the seat. Partly hidden behind the cushion in the drawing; the 11 cm label sits in this area and probably dimensions it.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.9,
+     "name": "length",
+     "note": "26 cm label across the right arm pad.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 26.0
+    },
+    {
+     "confidence": 0.7,
+     "name": "width",
+     "note": "6 cm label at the left arm.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 6.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "thickness",
+     "note": "Assumed pad thickness; not labelled.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    }
+   ],
+   "display_name": "Armrest pad (left and right)",
+   "id": "arm.pad",
+   "material": "pp_softtouch",
+   "notes": "Oval soft-touch pad. Identical left and right, so one part with count 2.",
+   "parent_id": "",
+   "primitive": "cushion",
+   "role": "surface"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "diameter",
+     "note": "Assumed section of the arm loop; not labelled.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    },
+    {
+     "confidence": 0.35,
+     "name": "length",
+     "note": "Developed length of the loop, derived from the 19 cm arm height plus the horizontal run.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 32.0
+    },
+    {
+     "confidence": 0.9,
+     "name": "height",
+     "note": "19 cm label from the seat surface to the arm pad.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 19.0
+    }
+   ],
+   "display_name": "Arm support / loop bracket (left and right)",
+   "id": "arm.support",
+   "material": "pp_glassfilled",
+   "notes": "Bent loop arm that carries the pad and bolts to the underside of the seat. Mirrored pair, count 2.",
+   "parent_id": "",
+   "primitive": "tube",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.35,
+     "name": "length",
+     "note": "Assumed plate size; hidden under the seat.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 25.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "width",
+     "note": "Assumed.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 25.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "thickness",
+     "note": "Assumed incl. tilt mechanism housing.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 4.0
+    }
+   ],
+   "display_name": "Seat mechanism plate",
+   "id": "mechanism.plate",
+   "material": "steel",
+   "notes": "Tilt/height mechanism between the seat deck and the gas lift. Visible only as the small block under the seat in the drawing.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "hardware"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "diameter",
+     "note": "Assumed outer tube diameter; the drawing gives no diameter.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 5.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "length",
+     "note": "Derived: seat height range 41 - 51 cm minus an assumed 22 cm from floor to the top of the base hub gives roughly 19 - 29 cm of column.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 24.0
+    }
+   ],
+   "display_name": "Gas lift cylinder",
+   "id": "lift.cylinder",
+   "material": "steel_gas_spring",
+   "notes": "Telescopic gas spring. Length is a range, not a single value - fully compressed about 19 cm, extended about 29 cm.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "length",
+     "note": "Assumed from the small handle drawn under the left of the seat.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 12.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "width",
+     "note": "Assumed.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 3.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "thickness",
+     "note": "Assumed.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.0
+    }
+   ],
+   "display_name": "Height adjustment lever",
+   "id": "lift.lever",
+   "material": "pp",
+   "notes": "Paddle lever poking out below the left of the seat in the drawing. Parent is the mechanism plate it clips into.",
+   "parent_id": "mechanism.plate",
+   "primitive": "box",
+   "role": "hardware"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.35,
+     "name": "diameter",
+     "note": "Assumed hub diameter; not labelled.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 10.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Assumed; the hub is the short block the five spokes radiate from.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 8.0
+    }
+   ],
+   "display_name": "Five-star base hub",
+   "id": "base.hub",
+   "material": "nylon_glassfilled",
+   "notes": "Centre of the base into which the gas lift is pressed.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "structural"
+  },
+  {
+   "count": 5,
+   "dimensions": [
+    {
+     "confidence": 0.55,
+     "name": "length",
+     "note": "Derived: 62 cm castor-to-castor span minus a 10 cm hub gives 26 cm per spoke.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 26.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "width",
+     "note": "Assumed spoke section.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 4.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Assumed spoke section; spokes taper toward the castor in the drawing.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    }
+   ],
+   "display_name": "Base spoke / star leg",
+   "id": "base.spoke",
+   "material": "nylon_glassfilled",
+   "notes": "One of the five radial arms. Identical, so one part with count 5. Modelled straight although the drawing shows them tapering and sweeping down.",
+   "parent_id": "base.hub",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 5,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "diameter",
+     "note": "Assumed twin-wheel castor size for this chair class; not labelled.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 5.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "width",
+     "note": "Assumed overall wheel width.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    }
+   ],
+   "display_name": "Castor wheel",
+   "id": "caster.wheel",
+   "material": "nylon",
+   "notes": "Twin-wheel castor drawn at the end of each spoke. Wheels per castor are not resolved - modelled as a single cylinder.",
+   "parent_id": "caster.fork",
+   "primitive": "cylinder",
+   "role": "hardware"
+  },
+  {
+   "count": 5,
+   "dimensions": [
+    {
+     "confidence": 0.35,
+     "name": "length",
+     "note": "Assumed fork width over the wheel.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 4.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "width",
+     "note": "Assumed.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Assumed fork plus swivel stem height.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 6.0
+    }
+   ],
+   "display_name": "Castor fork and stem",
+   "id": "caster.fork",
+   "material": "steel",
+   "notes": "Swivel housing and stem that plugs into the end of the base spoke and carries the wheel.",
+   "parent_id": "base.spoke",
+   "primitive": "box",
+   "role": "hardware"
+  }
+ ],
+ "readability": {
+  "labels_found": true,
+  "notes": "Single clean line drawing with printed dimension labels; all the main labels are legible. Weak points: (1) the two seat labels 43 cm and 46 cm sit on near-parallel diagonals and cannot be told apart with certainty, so the width/depth assignment is an assumption; (2) the 11 cm label sits in a cluttered area behind the seat and its leader does not clearly land on one edge; (3) the second 6 cm label points at the arm rather than an edge, so it is read as pad width; (4) no diameters at all are given for the gas lift, hub or castors, and nothing at all is shown of the underside of the seat."
+ }
+}

@@ -1,0 +1,174 @@
+/* Model Forge - dashboard hero.
+   The one dark, saturated surface in the signed-in app, so the eye has an
+   obvious place to land before it reaches the cards below. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 26px 28px 0;
+  margin-bottom: 18px;
+  background: #081627;
+  isolation: isolate;
+  box-shadow: 0 10px 34px rgba(8, 22, 39, .22);
+}
+
+/* Colour. Three stops rather than two, so the panel has a diagonal light
+   direction instead of reading as a flat wash. */
+.hero-wash {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: linear-gradient(135deg, #1b3f68 0%, #122d4c 42%, #081627 100%);
+}
+
+/* A faint blueprint grid - this product is about measured objects, so the
+   reference is doing a little work rather than being pure decoration. */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: .5;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .055) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(130% 100% at 20% 0%, #000 35%, transparent 78%);
+  -webkit-mask-image: radial-gradient(130% 100% at 20% 0%, #000 35%, transparent 78%);
+}
+
+/* Two soft light sources for depth. Static - see the note in the template
+   about why nothing here loops. */
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(58px);
+  z-index: -1;
+  pointer-events: none;
+}
+.hero-glow-a {
+  width: 330px; height: 330px;
+  top: -140px; left: -90px;
+  background: rgba(232, 161, 58, .30);
+}
+.hero-glow-b {
+  width: 280px; height: 280px;
+  bottom: -150px; right: 40px;
+  background: rgba(63, 184, 196, .20);
+}
+
+/* ------------------------------------------------------------------ copy */
+
+.hero-inner {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .58);
+  margin-bottom: 7px;
+}
+
+.hero-title {
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  color: #fff;
+  line-height: 1.18;
+  margin-bottom: 7px;
+}
+
+/* The name is the point of the sentence, so it gets the accent. */
+.hero-name {
+  background: linear-gradient(100deg, #f0b45e 10%, #6fd3dc 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, .74);
+  max-width: 62ch;
+}
+.hero-sub b { color: #fff; font-weight: 600; text-transform: capitalize; }
+
+/* White, not the primary button. A navy button on a navy panel is a button you
+   have to hunt for. */
+.btn-onhero {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #fff;
+  color: #0f2d4a;
+  border: 0;
+  box-shadow: 0 6px 18px rgba(4, 14, 26, .32);
+}
+.btn-onhero svg { width: 16px; height: 16px; }
+.btn-onhero:hover:not(:disabled) { background: #eef4fa; }
+.btn-onhero:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ----------------------------------------------------------------- stats */
+
+.hero-stats {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin: 22px -28px 0;
+  padding: 0 28px;
+  border-top: 1px solid rgba(255, 255, 255, .10);
+}
+@media (min-width: 640px) {
+  .hero-stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+.hstat {
+  padding: 14px 0 16px;
+  position: relative;
+}
+.hstat + .hstat::before {
+  content: "";
+  position: absolute;
+  left: -1px; top: 14px; bottom: 16px;
+  width: 1px;
+  background: rgba(255, 255, 255, .10);
+}
+@media (max-width: 639px) {
+  .hstat:nth-child(odd)::before { display: none; }
+}
+
+.hstat-n {
+  display: block;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -.02em;
+  color: #fff;
+  line-height: 1.1;
+}
+.hstat-l {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, .56);
+  letter-spacing: .02em;
+}
+
+/* -------------------------------------------------------------- entrance */
+
+.rise { animation: heroRise .6s cubic-bezier(.2, .7, .3, 1) both; }
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; opacity: 1; transform: none; }
+}

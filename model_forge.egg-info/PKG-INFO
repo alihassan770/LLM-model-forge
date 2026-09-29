@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: model-forge
+Version: 0.1.0
+Summary: Photo/PDF to parametric, editable 3D model with a synchronised bill of materials.
+Requires-Python: >=3.12
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn[standard]>=0.32
+Requires-Dist: jinja2>=3.1
+Requires-Dist: python-multipart>=0.0.20
+Requires-Dist: psycopg[binary,pool]>=3.2
+Requires-Dist: argon2-cffi>=23.1
+Requires-Dist: cryptography>=43.0
+Requires-Dist: anthropic>=0.40
+Requires-Dist: httpx>=0.27
+Requires-Dist: boto3>=1.35
+Requires-Dist: pillow>=10.4
+Provides-Extra: dev
+Requires-Dist: ruff>=0.7; extra == "dev"
+Requires-Dist: pytest>=8.0; extra == "dev"

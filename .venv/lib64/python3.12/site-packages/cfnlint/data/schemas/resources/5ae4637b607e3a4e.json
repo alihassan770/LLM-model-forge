@@ -1,0 +1,91 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/Name"
+ ],
+ "description": "Resource Type definition for AWS::Glue::Workflow",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "glue:GetWorkflow",
+    "glue:CreateWorkflow",
+    "glue:TagResource",
+    "glue:GetTags"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "glue:GetWorkflow",
+    "glue:DeleteWorkflow"
+   ]
+  },
+  "list": {
+   "permissions": [
+    "glue:ListWorkflows"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "glue:GetWorkflow",
+    "glue:GetTags"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "glue:GetWorkflow",
+    "glue:UpdateWorkflow",
+    "glue:TagResource",
+    "glue:UntagResource",
+    "glue:GetTags"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Name"
+ ],
+ "properties": {
+  "DefaultRunProperties": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  },
+  "Description": {
+   "description": "A description of the workflow",
+   "maxLength": 120000,
+   "minLength": 0,
+   "type": "string"
+  },
+  "MaxConcurrentRuns": {
+   "description": "You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.",
+   "type": "integer"
+  },
+  "Name": {
+   "description": "The name of the workflow representing the flow",
+   "maxLength": 255,
+   "minLength": 1,
+   "type": "string"
+  },
+  "Tags": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  }
+ },
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "permissions": [
+   "glue:GetTags",
+   "glue:TagResource",
+   "glue:UntagResource"
+  ],
+  "tagOnCreate": true,
+  "tagProperty": "/properties/Tags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::Glue::Workflow"
+}

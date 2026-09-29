@@ -1,0 +1,159 @@
+{
+ "additionalIdentifiers": [
+  [
+   "/properties/InstanceId",
+   "/properties/Name"
+  ]
+ ],
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/InstanceId",
+  "/properties/Name"
+ ],
+ "definitions": {
+  "Tag": {
+   "additionalProperties": false,
+   "properties": {
+    "Key": {
+     "maxLength": 128,
+     "minLength": 1,
+     "type": "string"
+    },
+    "Value": {
+     "maxLength": 256,
+     "minLength": 0,
+     "type": "string"
+    }
+   },
+   "required": [
+    "Key",
+    "Value"
+   ],
+   "type": "object"
+  }
+ },
+ "description": "Definition of AWS::SCN::Namespace Resource Type",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "scn:CreateDataLakeNamespace",
+    "scn:GetDataLakeNamespace",
+    "scn:TagResource",
+    "scn:ListTagsForResource"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "scn:DeleteDataLakeNamespace",
+    "scn:GetDataLakeNamespace"
+   ]
+  },
+  "list": {
+   "handlerSchema": {
+    "properties": {
+     "InstanceId": {
+      "maxLength": 36,
+      "minLength": 36,
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+      "type": "string"
+     }
+    },
+    "required": [
+     "InstanceId"
+    ]
+   },
+   "permissions": [
+    "scn:ListDataLakeNamespaces"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "scn:GetDataLakeNamespace",
+    "scn:ListTagsForResource"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "scn:UpdateDataLakeNamespace",
+    "scn:GetDataLakeNamespace",
+    "scn:TagResource",
+    "scn:UntagResource",
+    "scn:ListTagsForResource"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Arn"
+ ],
+ "properties": {
+  "Arn": {
+   "description": "The Amazon Resource Name (ARN) of the namespace.",
+   "maxLength": 1011,
+   "minLength": 20,
+   "pattern": "^arn:aws:scn(?::([a-z0-9-]+):([0-9]+):instance)?/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})[-_./A-Za-z0-9]*$",
+   "type": "string"
+  },
+  "CreatedTime": {
+   "description": "The creation time of the namespace.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "Description": {
+   "description": "The description of the namespace.",
+   "maxLength": 500,
+   "minLength": 1,
+   "type": "string"
+  },
+  "InstanceId": {
+   "description": "The Amazon Web Services Supply Chain instance identifier.",
+   "maxLength": 36,
+   "minLength": 36,
+   "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+   "type": "string"
+  },
+  "LastModifiedTime": {
+   "description": "The last modified time of the namespace.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "Name": {
+   "description": "The name of the namespace.",
+   "maxLength": 50,
+   "minLength": 1,
+   "pattern": "^[a-z0-9_]+$",
+   "type": "string"
+  },
+  "Tags": {
+   "description": "The tags for the namespace.",
+   "insertionOrder": false,
+   "items": {
+    "$ref": "#/definitions/Tag"
+   },
+   "maxItems": 200,
+   "type": "array",
+   "uniqueItems": true
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/CreatedTime",
+  "/properties/LastModifiedTime"
+ ],
+ "required": [
+  "InstanceId",
+  "Name"
+ ],
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "permissions": [
+   "scn:TagResource",
+   "scn:UntagResource",
+   "scn:ListTagsForResource"
+  ],
+  "tagOnCreate": true,
+  "tagProperty": "/properties/Tags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::SCN::Namespace"
+}

@@ -1,0 +1,61 @@
+{% extends "app_base.html" %}
+{% block title %}Add an item · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <p class="crumb">
+      <a href="/projects">Projects</a> ›
+      <a href="/projects/{{ project.id }}">{{ project.name }}</a> ›
+    </p>
+    <h1>Add an item</h1>
+    <p class="muted">One item per object - a chair, a table, a sofa.</p>
+  </div>
+</div>
+
+{% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+
+<section class="card narrow card-accent accent-green">
+  <div class="sect">
+    <span class="sect-icon ic-green">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M2.5 6.2l7.5-3.7 7.5 3.7-7.5 3.7z" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M2.5 10l7.5 3.7 7.5-3.7M2.5 13.8l7.5 3.7 7.5-3.7" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>What are you modelling?</h2>
+      <p>You will add its photos or spec sheet next</p>
+    </div>
+  </div>
+
+  <form method="post" action="/projects/{{ project.id }}/items" class="stack">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+    <label class="field">
+      <span>Name</span>
+      <input type="text" name="name" value="{{ name or '' }}" required autofocus
+             placeholder="Meeting table, Desk chair, Reception sofa…">
+    </label>
+
+    <label class="field">
+      <span>Category <small class="muted">optional</small></span>
+      <input type="text" name="category" value="{{ category or '' }}"
+             placeholder="Sofa, cabinet, table…">
+    </label>
+
+    <label class="field">
+      <span>Notes <small class="muted">optional</small></span>
+      <input type="text" name="notes" value="{{ notes or '' }}"
+             placeholder="Anything the model should know - materials, use, constraints">
+    </label>
+
+    <div class="btn-row">
+      <button type="submit" class="btn btn-primary">Add item</button>
+      <a href="/projects/{{ project.id }}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,346 @@
+{
+ "assumptions": [
+  "The table is solid knotty pine throughout with a clear natural finish, based on the pale wood tone and prominent knots.",
+  "Tabletop thickness is assumed to be 3 cm because it is not labelled; this in turn makes the legs 73 cm long.",
+  "Legs are assumed to be a constant square section of 7 x 7 cm, set flush with the outside of the aprons.",
+  "Aprons are assumed to run between the legs (tenoned into them), so their lengths are the labelled leg-frame spans minus two leg sections: 120 cm long, 68 cm short.",
+  "Apron height is assumed to be 9 cm and thickness 2.5 cm, neither being visible or labelled.",
+  "A small push-in nylon glide is assumed under each leg; no foot detail is visible in the photograph.",
+  "The single narrow vertical member seen near the middle of the image is read as the far back-left leg seen in perspective, not as a fifth centre support leg.",
+  "Dimensions are given in centimetres, matching the printed labels."
+ ],
+ "joints": [
+  {
+   "count": 4,
+   "id": "joint.apron_long_leg",
+   "notes": "Each end of the two long aprons is tenoned into a leg \u2014 four joints. A corner block or pocket screws would be the modern alternative but a solid pine table of this style is traditionally haunched mortise and tenon.",
+   "parts": [
+    "apron.long",
+    "leg"
+   ],
+   "type": "mortise_tenon"
+  },
+  {
+   "count": 4,
+   "id": "joint.apron_short_leg",
+   "notes": "Each end of the two short end rails is tenoned into a leg \u2014 four joints.",
+   "parts": [
+    "apron.short",
+    "leg"
+   ],
+   "type": "mortise_tenon"
+  },
+  {
+   "count": 4,
+   "id": "joint.top_frame",
+   "notes": "Top fastened down onto the apron frame. Because the top is solid wood, screws through slotted buttons or figure-8 clips are assumed so the panel can move seasonally.",
+   "parts": [
+    "top",
+    "apron.long",
+    "apron.short"
+   ],
+   "type": "butt_screwed"
+  },
+  {
+   "count": 4,
+   "id": "joint.glide_leg",
+   "notes": "Push-in nylon glide in the bottom of each leg.",
+   "parts": [
+    "leg",
+    "glide"
+   ],
+   "type": "press_fit"
+  }
+ ],
+ "missing_dimensions": [],
+ "object": {
+  "category": "table",
+  "style_notes": "Simple Scandinavian / rustic rectangular dining table in solid knotty pine with a clear natural finish. Straight square section legs set flush with the apron frame, plain rectangular aprons just below the top, no stretchers, no drawer. The top overhangs the leg frame on all four sides.",
+  "subtype": "rectangular dining table",
+  "summary": "A solid pine rectangular dining table, 152 cm long, 91 cm wide and 76 cm high, with four square legs joined by long and short aprons, and leg spacing of 134 cm by 82 cm."
+ },
+ "overall": [
+  {
+   "confidence": 0.95,
+   "name": "length",
+   "note": "Printed label '152 cm' along the long edge of the tabletop.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 152.0
+  },
+  {
+   "confidence": 0.92,
+   "name": "width",
+   "note": "Printed label '91 cm' along the short (depth) edge of the tabletop.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 91.0
+  },
+  {
+   "confidence": 0.95,
+   "name": "height",
+   "note": "Printed label '76 cm' on the left, floor to the top surface.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 76.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "frame_length",
+   "note": "Printed label '134 cm' along the bottom right; span across the leg frame in the long direction.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 134.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "frame_width",
+   "note": "Printed label '82 cm' along the bottom left; span across the leg frame in the short direction.",
+   "source": "image_label",
+   "unit": "cm",
+   "value": 82.0
+  },
+  {
+   "confidence": 0.4,
+   "name": "top_thickness",
+   "note": "Not labelled. Solid pine dining tops are normally 26-30 mm; 3 cm assumed.",
+   "source": "estimated",
+   "unit": "cm",
+   "value": 3.0
+  },
+  {
+   "confidence": 0.8,
+   "name": "overhang_long_end",
+   "note": "(152 - 134) / 2 = 9 cm of tabletop overhang at each end of the leg frame.",
+   "source": "derived",
+   "unit": "cm",
+   "value": 9.0
+  },
+  {
+   "confidence": 0.8,
+   "name": "overhang_side",
+   "note": "(91 - 82) / 2 = 4.5 cm of tabletop overhang at each side.",
+   "source": "derived",
+   "unit": "cm",
+   "value": 4.5
+  },
+  {
+   "confidence": 0.5,
+   "name": "leg_height",
+   "note": "76 cm overall minus the assumed 3 cm top thickness. Changes if the top thickness is different.",
+   "source": "derived",
+   "unit": "cm",
+   "value": 73.0
+  }
+ ],
+ "parts": [
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.95,
+     "name": "length",
+     "note": "Printed label '152 cm'.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 152.0
+    },
+    {
+     "confidence": 0.92,
+     "name": "width",
+     "note": "Printed label '91 cm'.",
+     "source": "image_label",
+     "unit": "cm",
+     "value": 91.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "thickness",
+     "note": "Not labelled; seen as a thin edge band in the perspective view. Laminated solid pine panel assumed.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 3.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "tabletop thickness",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 30.0
+    }
+   ],
+   "display_name": "Tabletop",
+   "id": "top",
+   "material": "softwood_pine",
+   "notes": "Edge-glued solid pine panel with visible knots and a slightly rounded arris. Overhangs the leg frame by 9 cm at the ends and 4.5 cm at the sides.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "surface"
+  },
+  {
+   "count": 4,
+   "dimensions": [
+    {
+     "confidence": 0.35,
+     "name": "section_width",
+     "note": "Square section not labelled; read from proportion against the 76 cm height.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 7.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "section_depth",
+     "note": "Assumed square, matching the width.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 7.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "height",
+     "note": "76 cm overall height minus the assumed 3 cm top thickness.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 73.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "leg cross-section (width and depth)",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 70.0
+    }
+   ],
+   "display_name": "Leg (4 off)",
+   "id": "leg",
+   "material": "softwood_pine",
+   "notes": "Legs are set flush with the outside face of the aprons at the four corners of a 134 x 82 cm frame. Outer faces are cut flush with the top edges of the aprons (visible in the image at the leg/apron junction).",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.6,
+     "name": "length",
+     "note": "134 cm leg-frame span minus two 7 cm leg sections = 120 cm between leg faces.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 120.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Apron depth below the top, not labelled; typical 8-10 cm for this table style.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 9.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "thickness",
+     "note": "Not visible in this view; typical solid pine apron 22-25 mm.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    },
+    {
+     "confidence": 1.0,
+     "name": "apron height (depth of the rail below the top)",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 90.0
+    }
+   ],
+   "display_name": "Long apron / side rail (2 off)",
+   "id": "apron.long",
+   "material": "softwood_pine",
+   "notes": "Runs between the legs along the two long sides. Setting the apron in from the top edge creates the 9 cm end overhang.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.6,
+     "name": "length",
+     "note": "82 cm leg-frame span minus two 7 cm leg sections = 68 cm between leg faces.",
+     "source": "derived",
+     "unit": "cm",
+     "value": 68.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "height",
+     "note": "Assumed the same depth as the long aprons.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 9.0
+    },
+    {
+     "confidence": 0.35,
+     "name": "thickness",
+     "note": "Assumed the same as the long aprons.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 2.5
+    }
+   ],
+   "display_name": "Short apron / end rail (2 off)",
+   "id": "apron.short",
+   "material": "softwood_pine",
+   "notes": "Runs between the legs along the two short ends; shorter than the long aprons so it is listed separately for the cutting list.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 4,
+   "dimensions": [
+    {
+     "confidence": 0.3,
+     "name": "diameter",
+     "note": "Not visible in the image; sized to sit inside the bottom of a 7 cm leg.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 3.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "height",
+     "note": "Assumed push-in nylon glide thickness.",
+     "source": "estimated",
+     "unit": "cm",
+     "value": 0.8
+    },
+    {
+     "confidence": 1.0,
+     "name": "presence and size of feet / glides",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 30.0
+    }
+   ],
+   "display_name": "Leg glide / foot pad (4 off)",
+   "id": "glide",
+   "material": "nylon_glide",
+   "notes": "Assumed to exist; the leg bottoms are simply cut square in the photograph and no foot detail is visible. Confirm before ordering.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "hardware"
+  }
+ ],
+ "readability": {
+  "labels_found": true,
+  "notes": "All five printed dimensions (152 cm, 91 cm, 76 cm, 134 cm, 82 cm) are crisp and unambiguous, and the leader lines clearly point at the top edges, the overall height and the two leg spans. The main limits are that the picture is a perspective rendering rather than an orthogonal drawing, so edge lengths foreshorten with distance, and no thicknesses at all are labelled. The apron and the underside of the top are partly in shadow, which is why their dimensions are estimated. No ambiguous digits were encountered."
+ }
+}

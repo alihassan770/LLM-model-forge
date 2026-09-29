@@ -1,0 +1,118 @@
+{% extends "app_base.html" %}
+{% block title %}{{ project.name }} · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <p class="crumb"><a href="/projects">Projects</a> ›</p>
+    <h1>{{ project.name }}</h1>
+    <p class="muted">
+      {% if project.client %}{{ project.client }} · {% endif %}
+      created {{ project.created_at.strftime('%d %b %Y') }}
+      {% if project.created_by_email %}by {{ project.created_by_email }}{% endif %}
+    </p>
+  </div>
+  <div class="head-actions">
+    <a href="/projects/{{ project.id }}/items/new" class="btn btn-primary">
+      <svg viewBox="0 0 20 20" aria-hidden="true" class="btn-plus">
+        <path d="M10 4.5v11M4.5 10h11" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Add item
+    </a>
+    <a href="/projects/{{ project.id }}/materials.csv" class="btn btn-csv">
+      Materials CSV
+    </a>
+    <form method="post" action="/projects/{{ project.id }}/archive"
+          onsubmit="return confirm('Archive “{{ project.name }}” and all its items?');">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <button type="submit" class="btn btn-ghost danger">Archive</button>
+    </form>
+  </div>
+</div>
+
+{% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+
+{% if items %}
+<div class="panel">
+  <table class="table tbl-list">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Notes</th>
+        <th class="ta-c">Photos</th>
+        <th class="ta-c">Builds</th>
+        <th>Status</th>
+        <th class="ta-r">Added</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for it in items %}
+      {% set state = 'ok'   if it.status == 'complete'
+                else 'warn' if it.status == 'questions'
+                else 'bad'  if it.status == 'failed'
+                else 'info' if it.status in ('extracting', 'building', 'ready')
+                else 'idle' %}
+      <tr class="is-{{ state }}">
+        <td class="c-name">
+          <span class="c-idx">{{ loop.index }}</span>
+          <a href="/items/{{ it.id }}" class="cell-link">{{ it.name }}</a>
+          <span class="cell-sub">
+            {% if it.category %}{{ it.category }}{% else %}No category{% endif %}
+          </span>
+        </td>
+
+        <td class="c-notes">
+          {% if it.notes %}{{ it.notes|truncate(72) }}
+          {% else %}<span class="cell-none"> - </span>{% endif %}
+        </td>
+
+        <td class="c-num ta-c">
+          {% if it.asset_count %}<b>{{ it.asset_count }}</b>
+          {% else %}<span class="cell-none">0</span>{% endif %}
+        </td>
+        <td class="c-num ta-c">
+          {% if it.build_count %}<b class="n-ok">{{ it.build_count }}</b>
+          {% else %}<span class="cell-none">0</span>{% endif %}
+        </td>
+
+        <td>
+          <span class="tag tag-{{ state }}">{{ status_label[it.status] }}</span>
+        </td>
+
+        <td class="c-date ta-r">
+          <b>{{ it.created_at.strftime('%d %b') }}</b>
+          <span>{{ it.created_at.strftime('%Y') }}</span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<p class="under-table">
+  <a href="/projects/{{ project.id }}/items/new">Add another item</a>
+</p>
+{% else %}
+<section class="card">
+  <div class="empty-state">
+    <span class="empty-icon">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M2.5 6.2l7.5-3.7 7.5 3.7-7.5 3.7z" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M2.5 10l7.5 3.7 7.5-3.7M2.5 13.8l7.5 3.7 7.5-3.7" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+    </span>
+    <p><strong>Nothing in this project yet</strong></p>
+    <p class="muted">
+      Add one item per object - each gets its own photos, questions, 3D model
+      and bill of materials, and the project totals them up.
+    </p>
+    <a href="/projects/{{ project.id }}/items/new" class="btn btn-primary">
+      Add the first item
+    </a>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

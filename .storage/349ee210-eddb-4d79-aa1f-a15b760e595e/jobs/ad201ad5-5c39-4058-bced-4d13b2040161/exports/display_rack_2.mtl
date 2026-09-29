@@ -1,0 +1,502 @@
+# Blender 4.2.5 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl acrylic_printed
+Ns 739.600037
+Ka 1.000000 1.000000 1.000000
+Kd 0.964686 0.955973 0.921582
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl aluminium_gold
+Ns 462.399994
+Ka 0.900000 0.900000 0.900000
+Kd 0.577580 0.361307 0.068478
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl base.emblem_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/base_emblem.png
+
+newmtl crown.top_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/crown_top.png
+
+newmtl glass_amber
+Ns 739.600037
+Ka 1.000000 1.000000 1.000000
+Kd 0.584078 0.396755 0.147027
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.250000
+illum 9
+
+newmtl hdpe_white
+Ns 739.600037
+Ka 1.000000 1.000000 1.000000
+Kd 0.930111 0.904661 0.854993
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl hdpe_white.001
+Ns 739.600037
+Ka 1.000000 1.000000 1.000000
+Kd 0.955973 0.930111 0.879622
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl led_panel
+Ns 902.500000
+Ka 1.000000 1.000000 1.000000
+Kd 0.814847 0.775822 0.672443
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.250000
+illum 9
+
+newmtl led_strip
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.806952 0.760525 0.644480
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl mdf_painted
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.904661 0.879622 0.822786
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl mdf_painted.001
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.887923 0.863157 0.814847
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl mdf_painted.002
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.921582 0.896269 0.838799
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl mdf_painted.003
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.930111 0.904661 0.854993
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl metal_gold
+Ns 462.399994
+Ka 0.900000 0.900000 0.900000
+Kd 0.584078 0.361307 0.020289
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+
+newmtl pet_white
+Ns 739.600037
+Ka 1.000000 1.000000 1.000000
+Kd 0.887923 0.846873 0.760525
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl poster.graphic_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/poster_graphic.png
+
+newmtl print_panel
+Ns 6.399997
+Ka 1.000000 1.000000 1.000000
+Kd 0.863157 0.822786 0.752942
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl product.bottle.pump.lg_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_lg.png
+
+newmtl product.bottle.pump.lg_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_lg.png
+
+newmtl product.bottle.pump.s1_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_3_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_4_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_5_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_6_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s1_7_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s1.png
+
+newmtl product.bottle.pump.s2_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s2_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s2_3_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s2_4_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s2_5_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s2_6_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s2.png
+
+newmtl product.bottle.pump.s3_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.bottle.pump.s3_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.bottle.pump.s3_3_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.bottle.pump.s3_4_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.bottle.pump.s3_5_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.bottle.pump.s3_6_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_bottle_pump_s3.png
+
+newmtl product.jar.s1_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s1.png
+
+newmtl product.jar.s1_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s1.png
+
+newmtl product.jar.s2_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s2.png
+
+newmtl product.jar.s2_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s2.png
+
+newmtl product.jar.s3_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s3.png
+
+newmtl product.jar.s4_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_jar_s4.png
+
+newmtl product.tube_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/product_tube.png
+
+newmtl shelf.talker_1_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/shelf_talker.png
+
+newmtl shelf.talker_2_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/shelf_talker.png
+
+newmtl shelf.talker_3_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/shelf_talker.png
+
+newmtl shelf.talker_4_front_art
+Ns 202.500000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd /tmp/forge-build-kzskddgx/artwork/shelf_talker.png
+
+newmtl steel
+Ns 462.399994
+Ka 0.900000 0.900000 0.900000
+Kd 0.323143 0.351533 0.381326
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3

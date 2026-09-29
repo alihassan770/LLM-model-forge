@@ -1,0 +1,775 @@
+{% extends "app_base.html" %}
+{% block title %}{{ item.name }} · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <p class="crumb">
+      <a href="/projects">Projects</a> ›
+      <a href="/projects/{{ item.project_id }}">{{ item.project_name }}</a> ›
+    </p>
+    <h1>{{ item.name }}</h1>
+    <p class="muted">
+      {% if item.category %}{{ item.category }} · {% endif %}
+      <span class="status status-{{ item.status }}">{{ status_label[item.status] }}</span>
+      · created {{ item.created_at.strftime('%d %b %Y') }}
+      by {{ item.created_by_email or ' - ' }}
+    </p>
+  </div>
+  <form method="post" action="/items/{{ item.id }}/archive"
+        onsubmit="return confirm('Archive “{{ item.name }}”? Its files and models stay, but it leaves the project.');">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <button type="submit" class="btn btn-ghost btn-sm danger">Archive item</button>
+  </form>
+</div>
+
+{% if notice %}<div class="alert alert-ok">{{ notice }}</div>{% endif %}
+
+{% if rejected %}
+<div class="alert alert-error">
+  <strong>{{ rejected|length }} file{{ '' if rejected|length == 1 else 's' }} not added.</strong>
+  <ul class="reject-list">
+    {% for name, reason in rejected %}
+    <li><b>{{ name }}</b> - {{ reason }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<section class="card card-accent accent-green">
+  <div class="sect">
+    <span class="sect-icon ic-green">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13.5V4M6.5 7.5L10 4l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 13v3a1.5 1.5 0 001.5 1.5h10a1.5 1.5 0 001.5-1.5v-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </span>
+    <div class="sect-text">
+      <h2>Add source files</h2>
+      <p>PNG, JPEG, WebP or PDF - a spec sheet with dimensions gives the most accurate result</p>
+    </div>
+  </div>
+
+  <form method="post" action="/items/{{ item.id }}/upload"
+        enctype="multipart/form-data" class="stack" id="upload-form">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+    <label class="dropzone" id="dropzone">
+      <input type="file" name="files" multiple id="file-input"
+             accept=".png,.jpg,.jpeg,.webp,.pdf,image/png,image/jpeg,image/webp,application/pdf">
+      <span class="dz-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 16V4M7.5 8.5L12 4l4.5 4.5" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3.5 15v3.2a1.8 1.8 0 001.8 1.8h13.4a1.8 1.8 0 001.8-1.8V15"
+                fill="none" stroke="currentColor" stroke-width="1.7"
+                stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="dz-main">Drop files here, or <b>browse</b></span>
+      <span class="dz-sub muted">PNG, JPEG, WebP up to 25 MB · PDF up to 32 MB</span>
+      <span class="dz-picked" id="dz-picked" hidden></span>
+    </label>
+
+    <div class="field">
+      <span>What is this?</span>
+      <div class="role-cards">
+        {% for key, label in role_label.items() %}
+        <label class="role-card {% if key == 'primary' %}is-on{% endif %}">
+          <input type="radio" name="role" value="{{ key }}"
+                 {% if key == 'primary' %}checked{% endif %}>
+          <span class="role-card-top">
+            <span class="role-card-name">{{ label }}</span>
+            <span class="role-card-check"></span>
+          </span>
+          <span class="role-card-desc">
+            {% if key == 'primary' %}The main photo of the object.
+            {% elif key == 'additional_view' %}Another angle - side, back, underneath.
+            {% else %}A drawing or datasheet with measurements on it.
+            {% endif %}
+          </span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" class="btn btn-primary" id="upload-btn">Upload</button>
+      <span class="muted" id="upload-hint"></span>
+    </div>
+  </form>
+</section>
+
+<section class="card card-accent accent-blue">
+  <div class="sect">
+    <span class="sect-icon ic-blue">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7.2" cy="8" r="1.4" fill="currentColor"/><path d="M3 14l4.2-4 3.3 3 2.8-2.4L17 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </span>
+    <div class="sect-text">
+      <h2>Source files</h2>
+      <p>{{ assets|length }} attached</p>
+    </div>
+  </div>
+
+  {#  Said once, above the grid, rather than on every card: the cause is the
+      same for all of them and the fix is a setting, not a retry. #}
+  {% if assets and assets|rejectattr('present')|list %}
+  <div class="alert alert-warn">
+    <strong>Some files are no longer on the server.</strong>
+    They were saved to this server's own disk, which is erased every time the
+    app redeploys. The records survive; the files do not. Set a storage bucket
+    in <a href="/settings">Workspace settings</a> and re-upload, and it will
+    not happen again.
+  </div>
+  {% endif %}
+
+  {% if assets %}
+  <div class="asset-grid">
+    {% for a in assets %}
+    <figure class="asset">
+      <div class="asset-thumb">
+        {#  The row survived; the bytes did not. Say which, because a broken
+            image icon inside an otherwise complete card is indistinguishable
+            from the application being broken. #}
+        {% if not a.present %}
+          <div class="asset-gone" title="The file is no longer on the server">
+            <span class="asset-gone-mark">!</span>
+            <span class="asset-gone-text">File no longer on the server</span>
+          </div>
+        {% elif a.detected_mime == 'application/pdf' %}
+          <a href="{{ a.url }}" target="_blank" rel="noopener" class="pdf-tile">
+            <span class="pdf-badge">PDF</span>
+            {% if a.page_count %}<span class="pdf-pages">{{ a.page_count }} pages</span>{% endif %}
+          </a>
+        {% else %}
+          <a href="{{ a.url }}" target="_blank" rel="noopener">
+            <img src="{{ a.url }}" alt="{{ a.original_name }}" loading="lazy">
+          </a>
+        {% endif %}
+      </div>
+      <figcaption>
+        <div class="asset-name" title="{{ a.original_name }}">{{ a.original_name }}</div>
+        <div class="asset-meta muted">
+          <span class="chip chip-{{ a.detected_mime.split('/')[1] }}">
+            {{ labels[a.detected_mime] }}
+          </span>
+          {{ human_size(a.bytes) }}
+          {% if a.width %}· {{ a.width }}×{{ a.height }}{% endif %}
+        </div>
+        <div class="asset-meta muted">
+          {{ role_label[a.role] }}
+          {# Worth surfacing: the browser said one thing and the bytes said
+             another. Usually a renamed file, occasionally something worse. #}
+          {% if a.declared_mime and a.declared_mime != a.detected_mime %}
+          <span class="mismatch" title="Uploaded as {{ a.declared_mime }}">
+            relabelled
+          </span>
+          {% endif %}
+        </div>
+        <form method="post" action="/items/{{ item.id }}/assets/{{ a.id }}/delete"
+              onsubmit="return confirm('Remove {{ a.original_name }}?');">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+          <button type="submit" class="btn btn-ghost btn-sm danger">Remove</button>
+        </form>
+      </figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p class="muted">Nothing uploaded yet.</p>
+  </div>
+  {% endif %}
+</section>
+
+{% if extract_error %}
+<div class="alert alert-error">
+  <strong>Analysis failed.</strong> {{ extract_error }}
+</div>
+{% endif %}
+
+{% if extract_issues %}
+<div class="alert alert-warn">
+  <strong>The reading had structural problems:</strong>
+  <ul class="reject-list">{% for i in extract_issues %}<li>{{ i }}</li>{% endfor %}</ul>
+</div>
+{% endif %}
+
+{% if assets %}
+<section class="card next-step">
+  <div>
+    <h2>{% if spec %}Re-read the files{% else %}Next: read the files{% endif %}</h2>
+    <p class="muted">
+      The model reads each file, identifies every part, and lists the dimensions
+      it could not measure so you can fill them in.
+      {% if usage %}
+      <br><span class="usage-note">Last run: {{ usage.input_tokens }} in /
+      {{ usage.output_tokens }} out · ${{ '%.4f' % usage.cost_usd }} ·
+      {{ (usage.latency_ms / 1000) | round(1) }}s</span>
+      {% endif %}
+    </p>
+  </div>
+  <form method="post" action="/items/{{ item.id }}/analyse">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <button type="submit" class="btn btn-primary" id="analyse-btn">
+      {% if spec %}Analyse again{% else %}Analyse files{% endif %}
+    </button>
+  </form>
+</section>
+{% endif %}
+
+{% if spec %}
+<section class="card card-accent accent-violet">
+  <div class="sect">
+    <span class="sect-icon ic-violet">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M3 5.5h14M3 10h14M3 14.5h9" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>What the model read</h2>
+      <p>
+        Revision {{ spec_row.revision }} · {{ spec_row.model }} ·
+        {{ spec.parts|length }} parts
+      </p>
+    </div>
+  </div>
+
+  {% if spec.object.summary %}
+  <p class="spec-summary">{{ spec.object.summary }}</p>
+  {% endif %}
+
+  <p class="spec-plain">
+    Found <b>{{ spec.parts|length }} parts</b>
+    made of {{ spec.parts | map(attribute='material') | unique | list | length }}
+    different materials.
+    {% if spec.missing_dimensions %}
+    <b>{{ spec.missing_dimensions|length }} measurements</b> are still needed.
+    {% else %}
+    Every measurement needed is present.
+    {% endif %}
+  </p>
+
+  {% if spec.overall %}
+  <div class="dim-row">
+    {% for m in spec.overall %}
+    <div class="dim">
+      <span class="dim-name">{{ m.name }}</span>
+      <span class="dim-value">{{ m.value }}{{ m.unit }}</span>
+      <span class="src src-{{ m.source }}" title="{{ m.note }}">{{ m.source.replace('_',' ') }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <details class="parts-detail">
+    <summary>
+      Show all {{ spec.parts|length }} parts and their dimensions
+    </summary>
+  <table class="table parts-table">
+    <thead>
+      <tr><th>Part</th><th>Type</th><th>Material</th><th>Qty</th><th>Dimensions</th></tr>
+    </thead>
+    <tbody>
+      {% for p in spec.parts %}
+      <tr>
+        <td>
+          <span class="who">{{ p.display_name }}</span>
+          <br><code class="tiny">{{ p.id }}</code>
+          {% if p.notes %}<br><small class="muted">{{ p.notes }}</small>{% endif %}
+        </td>
+        <td><span class="prim">{{ p.primitive }}</span></td>
+        <td class="muted">{{ p.material }}</td>
+        <td>{% if p.count > 1 %}<b>×{{ p.count }}</b>{% else %}1{% endif %}</td>
+        <td>
+          {% for d in p.dimensions %}
+          <span class="dim-chip conf-{{ band(d.confidence) }}"
+                title="{{ d.source }} · confidence {{ (d.confidence * 100) | round }}%{% if d.note %} · {{ d.note }}{% endif %}">
+            {{ d.name }} <b>{{ d.value }}{{ d.unit }}</b>
+          </span>
+          {% else %}<span class="muted"> - </span>{% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </details>
+
+  {% if spec.readability.notes or spec.assumptions %}
+  <div class="honesty">
+    {% if spec.readability.notes %}
+    <p><b>Reading notes:</b> {{ spec.readability.notes }}</p>
+    {% endif %}
+    {% if spec.assumptions %}
+    <p><b>Assumptions:</b></p>
+    <ul>{% for a in spec.assumptions %}<li>{{ a }}</li>{% endfor %}</ul>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+{% if spec.missing_dimensions %}
+<section class="card card-accent accent-amber">
+  <div class="sect">
+    <span class="sect-icon ic-amber">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7.8 7.6a2.3 2.3 0 114.2 1.3c-.6.8-1.5 1-1.5 2.1M10 14.2v.5"
+              fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>Dimensions still needed</h2>
+      <p>{{ spec.missing_dimensions|length }} to answer before a model can be built</p>
+    </div>
+  </div>
+
+  <form method="post" action="/items/{{ item.id }}/answers" id="answers-form">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+
+    <ol class="qlist">
+      {% for q in spec.missing_dimensions %}
+      {#  `is-cropless` matters for the layout, not the styling: the row is a
+          two-column grid of crop-then-text, and a row with no crop would
+          otherwise auto-place its text into the 132px picture column and wrap
+          it one word per line. Set here for a question that never had a
+          region, and by the image's onerror below for one whose crop 404s. #}
+      <li class="q {% if q.blocking %}is-blocking{% endif %}
+                 {% if not (q.region and q.region.found) %}is-cropless{% endif %}">
+
+        {#  The crop of the part being asked about. Without it a question like
+            "how wide is the cross-member" means reading the whole drawing
+            again to work out which piece that is. #}
+        {#  A crop can legitimately fail to be made - the source page may not
+            have been kept, or the region may be degenerate - and the endpoint
+            answers 404. Left alone the browser draws a broken-image icon next
+            to the question, which reads as "this app is broken" rather than
+            "there is no picture for this one". Removing the link leaves the
+            question exactly as it looks when no region was found at all. #}
+        {% if q.region and q.region.found %}
+        <a class="q-crop" href="{{ assets[0].url if assets else '#' }}"
+           target="_blank" rel="noopener" title="Open the full image">
+          <img src="/items/{{ item.id }}/crop/{{ loop.index0 }}"
+               alt="The part this question is about" loading="lazy"
+               onerror="this.closest('.q').classList.add('is-cropless');
+                        this.closest('.q-crop').remove()">
+        </a>
+        {% endif %}
+
+        <div class="q-body">
+          <div class="q-head">
+            <span class="q-num">{{ loop.index }}</span>
+            <span class="q-text">{{ q.question }}</span>
+            {% if q.blocking %}<span class="q-tag">required</span>
+            {% else %}<span class="q-tag q-optional">optional</span>{% endif %}
+          </div>
+
+          {% if q.why_needed %}<p class="q-why muted">{{ q.why_needed }}</p>{% endif %}
+
+          <div class="q-form">
+            <input type="number" name="value_{{ loop.index0 }}" step="any" min="0.01"
+                   class="q-value"
+                   placeholder="{% if q.suggested_max %}{{ ((q.suggested_min + q.suggested_max) / 2) | round(1) }}{% else %} - {% endif %}"
+                   {% if q.suggested_min %}data-min="{{ q.suggested_min }}"{% endif %}
+                   {% if q.suggested_max %}data-max="{{ q.suggested_max }}"{% endif %}>
+
+            <select name="unit_{{ loop.index0 }}" class="q-unit">
+              {% for u in units %}
+              <option value="{{ u }}" {% if u == q.unit %}selected{% endif %}>{{ u }}</option>
+              {% endfor %}
+            </select>
+
+            {% if q.suggested_max %}
+            <span class="q-expect muted">
+              usually {{ q.suggested_min }}-{{ q.suggested_max }}{{ q.unit }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <div class="answers-bar">
+      <button type="submit" class="btn btn-primary">Save all answers</button>
+      <span class="muted small">
+        Fill in what you know - blanks are simply left for later.
+      </span>
+    </div>
+  </form>
+</section>
+{% endif %}
+{% endif %}
+
+{% if report %}
+<section class="card card-accent {% if report.ok %}accent-green{% else %}accent-amber{% endif %}">
+  <div class="sect">
+    <span class="sect-icon {% if report.ok %}ic-green{% else %}ic-amber{% endif %}">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        {% if report.ok %}
+        <path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor"
+              stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+        {% else %}
+        <path d="M10 3.2l7 12.4H3z" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M10 8v3.2M10 13.4v.5" stroke="currentColor" stroke-width="1.7"
+              stroke-linecap="round"/>
+        {% endif %}
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>{% if report.ok %}Ready to build{% else %}Not ready to build{% endif %}</h2>
+      <p>
+        {{ report.buildable_parts }} of {{ report.total_parts }} parts have
+        enough dimensions to generate
+      </p>
+    </div>
+  </div>
+
+  {% if report.problems %}
+  <ul class="gate-list gate-problems">
+    {% for pr in report.problems %}<li>{{ pr }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if report.warnings %}
+  <details class="gate-warn">
+    <summary>{{ report.warnings|length }} thing{{ '' if report.warnings|length == 1 else 's' }} worth checking</summary>
+    <ul class="gate-list">
+      {% for w in report.warnings %}<li>{{ w }}</li>{% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+
+  <div class="build-row" id="gate">
+    <form method="post" action="/items/{{ item.id }}/build">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      <button type="submit" class="btn btn-primary" id="build-btn"
+              {% if not report.ok or not blender %}disabled{% endif %}
+              {% if not blender %}title="Blender was not found on the server"{% endif %}>
+        Build 3D model
+      </button>
+    </form>
+    <span class="muted small">
+      {% if not blender %}
+        Blender is not installed on this server, so nothing can be generated.
+      {% elif report.ok %}
+        Generates {{ report.total_parts }} parts as separate, editable objects.
+      {% else %}
+        Answer the outstanding dimensions above first.
+      {% endif %}
+    </span>
+  </div>
+</section>
+{% endif %}
+
+{% if jobs %}
+<section class="card card-accent accent-teal" id="downloads">
+  <div class="sect">
+    <span class="sect-icon ic-teal">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M10 3v9M6.5 8.5L10 12l3.5-3.5" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.5 13.5v2A1.5 1.5 0 005 17h10a1.5 1.5 0 001.5-1.5v-2"
+              fill="none" stroke="currentColor" stroke-width="1.7"
+              stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>3D model</h2>
+      <p>Each part is a separate, named object you can edit</p>
+    </div>
+  </div>
+
+  {#  The newest build is the one that matters; the rest are history. Showing
+      every build at equal weight made three rebuilds of the same specification
+      look like six duplicate downloads of the same file. #}
+  {% set latest = jobs[0] %}
+  {% set older = jobs[1:] %}
+
+  <div class="job {% if latest.state == 'failed' %}is-failed{% endif %}">
+    <div class="job-head">
+      <span class="status status-{{ 'complete' if latest.state == 'done' else ('failed' if latest.state == 'failed' else 'building') }}">
+        {{ latest.state }}
+      </span>
+      <span class="muted small">
+        Built from spec revision {{ latest.spec_revision }}
+        {% if latest.objects_built %}· {{ latest.objects_built }} objects{% endif %}
+        {% if latest.duration_ms %}· {{ (latest.duration_ms / 1000) | round(1) }}s{% endif %}
+        · {{ latest.created_at.strftime('%d %b %H:%M') }}
+      </span>
+    </div>
+
+    {% if latest.error %}<p class="job-error">{{ latest.error }}</p>{% endif %}
+
+    {% set has_glb = latest.artifacts | selectattr('format', 'equalto', 'glb') | list | length > 0 %}
+    {% set perspective = (latest.previews | selectattr('format', 'equalto', 'preview_perspective') | list | first) %}
+
+    {% if has_glb or latest.previews %}
+    <div class="preview-strip">
+      {% if has_glb %}
+      {#  The interactive model takes the place the perspective render used to
+          hold. The render is still used as the poster, so something correct is
+          on screen immediately and the 3D arrives when it has loaded: a
+          viewer that starts as an empty grey box looks broken for the second
+          it takes to parse the file.  #}
+      <div class="viewer is-main" id="viewer-box">
+        <model-viewer
+          src="/items/{{ item.id }}/model.glb"
+          {% if perspective %}poster="/items/{{ item.id }}/download/{{ perspective.id }}"{% endif %}
+          alt="3D model of {{ item.name }}"
+          camera-controls
+          touch-action="pan-y"
+          interaction-prompt="none"
+          shadow-intensity="0.7"
+          exposure="1.05"
+          environment-image="neutral"
+          min-field-of-view="12deg"
+          max-field-of-view="55deg"
+          reveal="auto">
+        </model-viewer>
+        <span class="viewer-label">3D</span>
+        <span class="viewer-hint">Drag to turn &middot; scroll to zoom</span>
+        <button type="button" class="viewer-expand" data-expand="viewer-box"
+                title="Full screen" aria-label="Full screen">
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M7.5 3H3v4.5M12.5 3H17v4.5M17 12.5V17h-4.5M3 12.5V17h4.5"
+                  fill="none" stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      {% endif %}
+
+      {#  The still renders stay: they are square-on elevations, which is what
+          you check a dimension against, and they load with the page. When
+          there is no built glb the perspective still leads, as before.  #}
+      {% for pv in latest.previews %}
+      {% if not (has_glb and pv.format == 'preview_perspective') %}
+      <a class="preview {% if not has_glb and loop.first %}is-main{% endif %}"
+         href="/items/{{ item.id }}/download/{{ pv.id }}"
+         target="_blank" rel="noopener">
+        <img src="/items/{{ item.id }}/download/{{ pv.id }}"
+             alt="{{ pv.format | replace('preview_','') }} view" loading="lazy">
+        <span class="preview-label">{{ pv.format | replace('preview_','') }}</span>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if latest.artifacts %}
+    <div class="dl-grid">
+      {% for a in latest.artifacts %}
+      <a class="dl" href="/items/{{ item.id }}/download/{{ a.id }}">
+        <span class="dl-ext">{{ a.format | upper }}</span>
+        <span class="dl-meta">
+          <span class="dl-name">{{ format_label.get(a.format, a.format) }}</span>
+          <span class="dl-size muted">
+            {{ format_use.get(a.format, '') }} · {{ human_size(a.bytes) }}
+          </span>
+        </span>
+        <svg class="dl-icon" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 4v8M6.5 8.5L10 12l3.5-3.5" fill="none" stroke="currentColor"
+                stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 14.5v1A1.5 1.5 0 005.5 17h9a1.5 1.5 0 001.5-1.5v-1"
+                fill="none" stroke="currentColor" stroke-width="1.7"
+                stroke-linecap="round"/>
+        </svg>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if latest.result and latest.result.skipped %}
+    <p class="muted small job-skipped">
+      {{ latest.result.skipped | length }} part(s) could not be generated:
+      {% for sk in latest.result.skipped %}{{ sk.id }} ({{ sk.why }}){% if not loop.last %}, {% endif %}{% endfor %}
+    </p>
+    {% endif %}
+
+    {% if latest.state == 'failed' and latest.log %}
+    <details class="job-log">
+      <summary>Show the Blender log</summary>
+      <pre>{{ latest.log[-2500:] }}</pre>
+    </details>
+    {% endif %}
+  </div>
+
+  {% if older %}
+  <details class="older-builds">
+    <summary>
+      {{ older | length }} earlier build{{ '' if older|length == 1 else 's' }}
+    </summary>
+    <table class="table">
+      <tbody>
+        {% for job in older %}
+        <tr>
+          <td class="nowrap muted">{{ job.created_at.strftime('%d %b %H:%M') }}</td>
+          <td>
+            <span class="status status-{{ 'complete' if job.state == 'done' else 'failed' }}">
+              {{ job.state }}
+            </span>
+          </td>
+          <td class="muted">
+            spec rev {{ job.spec_revision }}
+            {% if job.spec_revision == latest.spec_revision %}
+            <span class="same-spec" title="Same specification as the current build - the files are identical">
+              same as current
+            </span>
+            {% endif %}
+          </td>
+          <td class="muted">{{ job.objects_built or 0 }} objects</td>
+          <td class="right">
+            {% for a in job.artifacts %}
+            <a href="/items/{{ item.id }}/download/{{ a.id }}"
+               class="mini-dl">{{ a.format | upper }}</a>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </details>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if jobs %}
+<section class="card card-accent accent-amber" id="bom">
+  <div class="sect">
+    <span class="sect-icon ic-amber">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M6 2.5h8a1.5 1.5 0 011.5 1.5v12a1.5 1.5 0 01-1.5 1.5H6A1.5 1.5 0 014.5 16V4A1.5 1.5 0 016 2.5z"
+              fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7.5 6.5h5M7.5 9.5h5M7.5 12.5h3" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>Materials</h2>
+      <p>
+        {% if bom %}
+          Revision {{ bom.spec_revision }} · {{ bom.lines|length }} lines
+          {% if bom.created_at %}· {{ bom.created_at.strftime('%d %b %H:%M') }}{% endif %}
+        {% else %}
+          Quantities and sizes, calculated from the same specification the model
+          was built from
+        {% endif %}
+      </p>
+    </div>
+    <span class="sect-right">
+      {% if bom %}
+      <a href="/items/{{ item.id }}/bom.csv" class="btn btn-ghost btn-sm">
+        Download CSV
+      </a>
+      {% endif %}
+      <form method="post" action="/items/{{ item.id }}/bom">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <button type="submit" class="btn btn-primary btn-sm">
+          {% if bom %}Recalculate{% else %}Calculate materials{% endif %}
+        </button>
+      </form>
+    </span>
+  </div>
+
+  {% if bom %}
+  {% if bom.total_weight %}
+  <p class="bom-weight muted">
+    Estimated weight <b>{{ '%.1f' % bom.total_weight }} kg</b>
+  </p>
+  {% endif %}
+
+  {% set grouped = {} %}
+  {% for line in bom.lines %}
+  {% if grouped.update({line.category: grouped.get(line.category, []) + [line]}) %}{% endif %}
+  {% endfor %}
+
+  {% for cat, lines in grouped.items() %}
+  <h3 class="bom-cat">{{ category_label.get(cat, cat) }}</h3>
+  <table class="table bom-table">
+    <thead>
+      <tr><th>Material</th><th class="right">Qty</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for line in lines %}
+      <tr>
+        <td>
+          <span class="who">{{ line.description }}</span>
+          {% if line.detail and line.detail.pieces %}
+          <div class="cutlist">
+            <b>Cutting list:</b>
+            {% for piece in line.detail.pieces %}<span class="cut">{{ piece }}mm</span>{% endfor %}
+            <span class="muted">
+              from {{ line.detail.stock_length_mm | round | int }}mm stock
+              {% if line.detail.section %}({{ line.detail.section }}){% endif %}
+              · {{ line.detail.yield_pct }}% used
+              {% if line.detail.offcuts_mm %}
+              · offcuts {% for o in line.detail.offcuts_mm %}{{ o }}mm{% if not loop.last %}, {% endif %}{% endfor %}
+              {% endif %}
+            </span>
+          </div>
+          {% elif line.detail and line.detail.from %}
+          <div class="cutlist muted">
+            from {% for f in line.detail.from %}{{ f }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </div>
+          {% elif line.detail and line.detail.area_m2 %}
+          <div class="cutlist muted">
+            {{ line.detail.area_m2 }} m² of face area
+            {% if line.detail.sheet_size_mm %}· sheets {{ line.detail.sheet_size_mm }}{% endif %}
+          </div>
+          {% elif line.detail and line.detail.surface_m2 %}
+          <div class="cutlist muted">{{ line.detail.surface_m2 }} m² to cover</div>
+          {% endif %}
+          {% if line.part_ids %}
+          <div class="cutlist muted">
+            for {% for pid in line.part_ids %}<code class="tiny">{{ pid }}</code>{% endfor %}
+          </div>
+          {% endif %}
+        </td>
+        <td class="right"><b>{{ line.quantity | round(2) }}</b></td>
+        <td class="muted">{{ line.unit }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endfor %}
+
+  {% if bom.advice %}
+  <div class="advice">
+    {% if bom.advice.grades %}
+    <h3 class="bom-cat">What to buy</h3>
+    <ul>{% for g in bom.advice.grades %}
+      <li><code class="tiny">{{ g.material_code }}</code> {{ g.buy }}</li>
+    {% endfor %}</ul>
+    {% endif %}
+
+    {% if bom.advice.missing %}
+    <h3 class="bom-cat">Not in the list, but needed</h3>
+    <ul>{% for m in bom.advice.missing %}<li>{{ m }}</li>{% endfor %}</ul>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% else %}
+  <div class="empty-state">
+    <p class="muted">
+      Timber comes out as a cutting list, fabric as running metres, fasteners
+      from how the parts are joined.
+    </p>
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{#  model-viewer is vendored rather than pulled from a CDN: the page should
+    not depend on a third party being up, and nothing about a customer's model
+    should be an outbound request. It is only loaded on this page, and only
+    when there is something to show.  #}
+{% if jobs and jobs[0].artifacts | selectattr('format', 'equalto', 'glb') | list %}
+<script type="module" src="{{ asset('vendor/model-viewer.min.js') }}"></script>
+<script src="{{ asset('viewer.js') }}" defer></script>
+{% endif %}
+<script src="{{ asset('upload.js') }}" defer></script>
+<script src="{{ asset('settings.js') }}" defer></script>
+{% endblock %}

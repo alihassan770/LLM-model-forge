@@ -1,0 +1,65 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/ParameterGroupName",
+  "/properties/Description"
+ ],
+ "description": "Resource Type definition for AWS::DAX::ParameterGroup",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "dax:CreateParameterGroup",
+    "dax:UpdateParameterGroup",
+    "dax:DescribeParameterGroups",
+    "dax:DescribeParameters"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "dax:DeleteParameterGroup"
+   ]
+  },
+  "list": {
+   "permissions": [
+    "dax:DescribeParameterGroups"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "dax:DescribeParameterGroups",
+    "dax:DescribeParameters"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "dax:UpdateParameterGroup",
+    "dax:DescribeParameterGroups",
+    "dax:DescribeParameters"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/ParameterGroupName"
+ ],
+ "properties": {
+  "Description": {
+   "description": "A description of the parameter group.",
+   "type": "string"
+  },
+  "ParameterGroupName": {
+   "description": "The name of the parameter group.",
+   "type": "string"
+  },
+  "ParameterNameValues": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  }
+ },
+ "tagging": {
+  "taggable": false
+ },
+ "typeName": "AWS::DAX::ParameterGroup"
+}

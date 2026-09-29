@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block head %}<link rel="stylesheet" href="{{ asset('auth.css') }}">{% endblock %}
+{% block scripts %}<script src="{{ asset('auth.js') }}" defer></script>{% endblock %}
+{% block body_class %}auth-body{% endblock %}
+{% block main_class %}auth-split{% endblock %}
+
+{% block content %}
+<!-- Brand panel. Decorative only, so it is hidden from assistive tech. -->
+<aside class="auth-brand" aria-hidden="true">
+  <div class="mesh"></div>
+  <div class="grain"></div>
+
+  <span class="orb orb-1"></span>
+  <span class="orb orb-2"></span>
+  <span class="orb orb-3"></span>
+
+  <div class="brand-stage">
+    <div class="cube">
+      <span class="face face-front"></span>
+      <span class="face face-back"></span>
+      <span class="face face-right"></span>
+      <span class="face face-left"></span>
+      <span class="face face-top"></span>
+      <span class="face face-bottom"></span>
+    </div>
+    <div class="cube-shadow"></div>
+  </div>
+
+  <div class="brand-copy">
+    <div class="brand-lockup">
+      <span class="brand-mark brand-mark-lg">MF</span>
+      <span class="brand-wordmark">Model Forge</span>
+    </div>
+    <h2 class="brand-tagline">
+      A photograph in.<br>
+      An <em>editable</em> 3D model out.
+    </h2>
+    <ul class="brand-points">
+      <li><span class="tick"></span>Reads every part and its dimensions</li>
+      <li><span class="tick"></span>Asks only for what it could not measure</li>
+      <li><span class="tick"></span>Exports to Blender, 3ds Max and AutoCAD</li>
+    </ul>
+  </div>
+</aside>
+
+<!-- Form panel -->
+<section class="auth-panel">
+  <div class="auth-card">
+    {% block auth_form %}{% endblock %}
+  </div>
+</section>
+{% endblock %}

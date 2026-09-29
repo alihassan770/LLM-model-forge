@@ -1,0 +1,63 @@
+[project]
+name = "model-forge"
+version = "0.1.0"
+description = "Photo/PDF to parametric, editable 3D model with a synchronised bill of materials."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.20",
+    "psycopg[binary,pool]>=3.2",
+    "argon2-cffi>=23.1",
+    "cryptography>=43.0",
+    # Claude goes through the official SDK. DeepSeek exposes an
+    # OpenAI-compatible surface, so it goes over plain HTTP via httpx.
+    "anthropic>=0.40",
+    "httpx>=0.27",
+    # Only used when FORGE_S3_BUCKET is set; local dev never imports it.
+    "boto3>=1.35",
+    # Cropping the region a question asks about, and downscaling rendered PDF
+    # pages before they go to the model. This was missing for a long time and
+    # nothing failed locally, because a development virtualenv had Pillow
+    # installed by accident. The container, built from this list alone, did
+    # not: every question crop came back 404 and the answers page showed rows
+    # of broken images, while the uploaded photo beside them loaded fine. Both
+    # call sites caught ImportError and returned None, so there was no error
+    # anywhere to find. An import that is optional in code has to be required
+    # here, or it is not a dependency, it is a coincidence.
+    "pillow>=10.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.7",
+    "pytest>=8.0",
+]
+
+[project.scripts]
+forge = "forge.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["forge*"]
+
+[tool.setuptools.package-data]
+# Everything the app reads from disk at runtime. Missing entries here do not
+# show up in development, because the source tree is right there - they show up
+# as a pip-installed copy that starts and then cannot find its own prompt file.
+forge = [
+    "migrations/*.sql",
+    "web/templates/*.html",
+    "web/static/*",
+    "web/static/vendor/*",
+    "vision/prompts/*.md",
+    "bom/prompts/*.md",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

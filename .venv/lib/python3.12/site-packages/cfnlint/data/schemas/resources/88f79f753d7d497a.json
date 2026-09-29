@@ -1,0 +1,84 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/Name"
+ ],
+ "description": "Resource Type definition for AWS::Glue::CustomEntityType",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "glue:CreateCustomEntityType",
+    "glue:GetCustomEntityType",
+    "glue:TagResource"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "glue:DeleteCustomEntityType",
+    "glue:GetCustomEntityType"
+   ]
+  },
+  "list": {
+   "permissions": [
+    "glue:ListCustomEntityTypes"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "glue:GetCustomEntityType"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "glue:DeleteCustomEntityType",
+    "glue:CreateCustomEntityType",
+    "glue:GetCustomEntityType",
+    "glue:TagResource"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Name"
+ ],
+ "properties": {
+  "ContextWords": {
+   "description": "A list of context words.",
+   "items": {
+    "maxLength": 255,
+    "minLength": 1,
+    "type": "string"
+   },
+   "maxItems": 20,
+   "minItems": 1,
+   "type": "array",
+   "uniqueItems": false
+  },
+  "Name": {
+   "description": "The name of the custom entity type.",
+   "maxLength": 255,
+   "minLength": 1,
+   "type": "string"
+  },
+  "RegexString": {
+   "description": "A regular expression string that is used for detecting sensitive data in a custom pattern.",
+   "maxLength": 255,
+   "minLength": 1,
+   "type": "string"
+  },
+  "Tags": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  }
+ },
+ "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-resource-providers-glue",
+ "tagging": {
+  "taggable": false
+ },
+ "typeName": "AWS::Glue::CustomEntityType",
+ "writeOnlyProperties": [
+  "/properties/Tags"
+ ]
+}

@@ -1,0 +1,15 @@
+{#  Signed-in pages. The navigation rail lives in base.html, so this only adds
+    the stylesheets and the content column. #}
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ asset('shell.css') }}">
+<link rel="stylesheet" href="{{ asset('hero.css') }}">
+<link rel="stylesheet" href="{{ asset('projects.css') }}">
+{% endblock %}
+
+{% block main_class %}page{% endblock %}
+
+{% block content %}
+{% block page %}{% endblock %}
+{% endblock %}

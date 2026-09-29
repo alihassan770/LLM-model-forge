@@ -1,0 +1,247 @@
+{
+ "additionalIdentifiers": [
+  [
+   "/properties/AppInstanceId",
+   "/properties/ChannelFlowId"
+  ]
+ ],
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/AppInstanceArn"
+ ],
+ "definitions": {
+  "LambdaConfiguration": {
+   "additionalProperties": false,
+   "description": "Stores metadata about a Lambda processor.",
+   "properties": {
+    "InvocationType": {
+     "description": "Controls how the Lambda function is invoked.",
+     "enum": [
+      "ASYNC"
+     ],
+     "type": "string"
+    },
+    "ResourceArn": {
+     "description": "The ARN of the Lambda message processing function.",
+     "maxLength": 2048,
+     "minLength": 15,
+     "pattern": "^arn:aws:lambda:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9\\-_\\.]+(:(\\$LATEST|[a-zA-Z0-9\\-_]+))?$",
+     "type": "string"
+    }
+   },
+   "required": [
+    "ResourceArn",
+    "InvocationType"
+   ],
+   "type": "object"
+  },
+  "Processor": {
+   "additionalProperties": false,
+   "description": "Information about a processor in a channel flow.",
+   "properties": {
+    "Configuration": {
+     "$ref": "#/definitions/ProcessorConfiguration"
+    },
+    "ExecutionOrder": {
+     "description": "The sequence in which processors run.",
+     "maximum": 3,
+     "minimum": 1,
+     "type": "integer"
+    },
+    "FallbackAction": {
+     "description": "Determines whether to continue or stop processing when communication with a processor fails.",
+     "enum": [
+      "CONTINUE",
+      "ABORT"
+     ],
+     "type": "string"
+    },
+    "Name": {
+     "description": "The name of the processor.",
+     "maxLength": 256,
+     "minLength": 1,
+     "type": "string"
+    }
+   },
+   "required": [
+    "Name",
+    "Configuration",
+    "ExecutionOrder",
+    "FallbackAction"
+   ],
+   "type": "object"
+  },
+  "ProcessorConfiguration": {
+   "additionalProperties": false,
+   "description": "A processor's metadata.",
+   "properties": {
+    "Lambda": {
+     "$ref": "#/definitions/LambdaConfiguration"
+    }
+   },
+   "required": [
+    "Lambda"
+   ],
+   "type": "object"
+  },
+  "Tag": {
+   "additionalProperties": false,
+   "properties": {
+    "Key": {
+     "description": "The key in a tag.",
+     "maxLength": 128,
+     "minLength": 1,
+     "type": "string"
+    },
+    "Value": {
+     "description": "The value in a tag.",
+     "maxLength": 256,
+     "minLength": 1,
+     "type": "string"
+    }
+   },
+   "required": [
+    "Key",
+    "Value"
+   ],
+   "type": "object"
+  }
+ },
+ "description": "Creates a channel flow in the Amazon Chime SDK Messaging service. A channel flow is a container for processors (Lambda functions) that perform actions on chat messages.",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "chime:CreateChannelFlow",
+    "chime:DescribeChannelFlow",
+    "chime:TagResource"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "chime:DeleteChannelFlow",
+    "chime:DescribeChannelFlow"
+   ]
+  },
+  "list": {
+   "handlerSchema": {
+    "properties": {
+     "AppInstanceArn": {
+      "description": "The ARN of the app instance.",
+      "maxLength": 1600,
+      "minLength": 5,
+      "pattern": "^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}$",
+      "type": "string"
+     }
+    },
+    "required": [
+     "AppInstanceArn"
+    ]
+   },
+   "permissions": [
+    "chime:ListChannelFlows"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "chime:DescribeChannelFlow",
+    "chime:ListTagsForResource"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "chime:UpdateChannelFlow",
+    "chime:DescribeChannelFlow",
+    "chime:TagResource",
+    "chime:UntagResource",
+    "chime:ListTagsForResource"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Arn"
+ ],
+ "properties": {
+  "AppInstanceArn": {
+   "description": "The ARN of the app instance.",
+   "maxLength": 1600,
+   "minLength": 5,
+   "pattern": "^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}$",
+   "type": "string"
+  },
+  "AppInstanceId": {
+   "description": "The ID of the app instance, extracted from the channel flow ARN.",
+   "type": "string"
+  },
+  "Arn": {
+   "description": "The ARN of the channel flow.",
+   "maxLength": 1600,
+   "minLength": 5,
+   "pattern": "^arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}$",
+   "type": "string"
+  },
+  "ChannelFlowId": {
+   "description": "The ID of the channel flow, extracted from the channel flow ARN.",
+   "type": "string"
+  },
+  "CreatedTimestamp": {
+   "description": "The time at which the channel flow was created.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "LastUpdatedTimestamp": {
+   "description": "The time at which the channel flow was last updated.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "Name": {
+   "description": "The name of the channel flow.",
+   "maxLength": 256,
+   "minLength": 1,
+   "type": "string"
+  },
+  "Processors": {
+   "description": "Information about the processor Lambda functions.",
+   "insertionOrder": true,
+   "items": {
+    "$ref": "#/definitions/Processor"
+   },
+   "maxItems": 3,
+   "minItems": 1,
+   "type": "array"
+  },
+  "Tags": {
+   "description": "The tags for the channel flow.",
+   "insertionOrder": false,
+   "items": {
+    "$ref": "#/definitions/Tag"
+   },
+   "maxItems": 50,
+   "type": "array"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/AppInstanceId",
+  "/properties/ChannelFlowId",
+  "/properties/CreatedTimestamp",
+  "/properties/LastUpdatedTimestamp"
+ ],
+ "required": [
+  "AppInstanceArn",
+  "Name",
+  "Processors"
+ ],
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "permissions": [
+   "chime:TagResource",
+   "chime:UntagResource",
+   "chime:ListTagsForResource"
+  ],
+  "tagOnCreate": true,
+  "tagProperty": "/properties/Tags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::Chime::ChannelFlow"
+}

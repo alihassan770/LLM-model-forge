@@ -1,0 +1,112 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/MetadataProperties",
+  "/properties/TrialComponentName"
+ ],
+ "definitions": {
+  "MetadataProperties": {
+   "additionalProperties": false,
+   "properties": {
+    "CommitId": {
+     "type": "string"
+    },
+    "GeneratedBy": {
+     "type": "string"
+    },
+    "ProjectId": {
+     "type": "string"
+    },
+    "Repository": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "Status": {
+   "additionalProperties": false,
+   "properties": {
+    "Message": {
+     "type": "string"
+    },
+    "PrimaryStatus": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "TagsItems": {
+   "additionalProperties": false,
+   "properties": {
+    "Key": {
+     "type": "string"
+    },
+    "Value": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "Value",
+    "Key"
+   ],
+   "type": "object"
+  }
+ },
+ "description": "Resource Type definition for AWS::SageMaker::ExperimentTrialComponent",
+ "primaryIdentifier": [
+  "/properties/Id"
+ ],
+ "properties": {
+  "Arn": {
+   "type": "string"
+  },
+  "CreationTime": {
+   "type": "string"
+  },
+  "DisplayName": {
+   "type": "string"
+  },
+  "EndTime": {
+   "type": "string"
+  },
+  "Id": {
+   "type": "string"
+  },
+  "LastModifiedTime": {
+   "type": "string"
+  },
+  "LineageGroupArn": {
+   "type": "string"
+  },
+  "MetadataProperties": {
+   "$ref": "#/definitions/MetadataProperties"
+  },
+  "StartTime": {
+   "type": "string"
+  },
+  "Status": {
+   "$ref": "#/definitions/Status"
+  },
+  "Tags": {
+   "items": {
+    "$ref": "#/definitions/TagsItems"
+   },
+   "type": "array",
+   "uniqueItems": false
+  },
+  "TrialComponentName": {
+   "type": "string"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/LineageGroupArn",
+  "/properties/CreationTime",
+  "/properties/Id",
+  "/properties/LastModifiedTime",
+  "/properties/Arn"
+ ],
+ "required": [
+  "TrialComponentName"
+ ],
+ "typeName": "AWS::SageMaker::ExperimentTrialComponent"
+}

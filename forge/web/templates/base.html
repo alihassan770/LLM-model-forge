@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Model Forge{% endblock %}</title>
+  <link rel="stylesheet" href="{{ asset('app.css') }}">
+  {% if session and org %}<link rel="stylesheet" href="{{ asset('rail.css') }}">{% endif %}
+  {% block head %}{% endblock %}
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128736;</text></svg>">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+{% if session and org %}
+{# Navigation lives in one dark rail on the left: brand, then the menu
+   immediately beneath it, then the workspace and account pinned to the bottom.
+   The menu is top-aligned - the foot is pushed down with margin-top:auto
+   rather than the nav being stretched, so the links stay where the eye starts
+   however tall the window is. #}
+<div class="layout">
+
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+  <label for="nav-toggle" class="nav-scrim" aria-hidden="true"></label>
+
+  <aside class="rail">
+    <a class="rail-brand" href="/">
+      <span class="brand-mark">MF</span>
+      <span class="rail-brand-text">
+        <span class="rail-brand-name">Model Forge</span>
+        <span class="rail-brand-sub">photo → 3D</span>
+      </span>
+    </a>
+
+    <nav class="rail-nav" aria-label="Main">
+      <a href="/" class="rail-link {% if active == 'dashboard' %}is-active{% endif %}">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <rect x="2.5" y="2.5" width="6.5" height="6.5" rx="1.6" fill="none"
+                stroke="currentColor" stroke-width="1.5"/>
+          <rect x="11" y="2.5" width="6.5" height="6.5" rx="1.6" fill="none"
+                stroke="currentColor" stroke-width="1.5"/>
+          <rect x="2.5" y="11" width="6.5" height="6.5" rx="1.6" fill="none"
+                stroke="currentColor" stroke-width="1.5"/>
+          <rect x="11" y="11" width="6.5" height="6.5" rx="1.6" fill="none"
+                stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="/projects" class="rail-link {% if active == 'projects' %}is-active{% endif %}">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M2.5 6.2l7.5-3.7 7.5 3.7-7.5 3.7z" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M2.5 10l7.5 3.7 7.5-3.7M2.5 13.8l7.5 3.7 7.5-3.7"
+                fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linejoin="round"/>
+        </svg>
+        <span>Projects</span>
+      </a>
+
+      {% if org.role == 'admin' %}
+      <a href="/members"
+         class="rail-link {% if active == 'members' %}is-active{% endif %}">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="7.6" cy="7" r="2.8" fill="none" stroke="currentColor"
+                  stroke-width="1.5"/>
+          <path d="M2.4 16.4c0-2.9 2.3-4.6 5.2-4.6s5.2 1.7 5.2 4.6" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M13.6 5.1a2.6 2.6 0 010 4.6M14.6 11.9c1.8.4 3 1.8 3 4"
+                fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round"/>
+        </svg>
+        <span>Members</span>
+      </a>
+      {% endif %}
+
+      {% if org.role in ('admin', 'manager') %}
+      {#  Activity is hidden from the menu for now, by request. The route and
+          the audit log are untouched - only this link is gone, so restoring it
+          is a matter of uncommenting the block below.
+
+      <a href="/admin/activity"
+         class="rail-link {% if active == 'activity' %}is-active{% endif %}">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M2.5 14.5l4-5 3.5 3 3-4.5 4.5 6" fill="none" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2.5 3v14h15" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round"/>
+        </svg>
+        <span>Activity</span>
+      </a>
+      #}
+
+      {#  Settings sits last: it is the thing you visit once to set up the
+          workspace, not the thing you reach for every day. #}
+      <a href="/settings"
+         class="rail-link {% if active == 'settings' %}is-active{% endif %}">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor"
+                  stroke-width="1.5"/>
+          <path d="M10 2.2v2M10 15.8v2M17.8 10h-2M4.2 10h-2M15.5 4.5l-1.4 1.4M5.9 14.1l-1.4 1.4M15.5 15.5l-1.4-1.4M5.9 5.9L4.5 4.5"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>Settings</span>
+      </a>
+      {% endif %}
+    </nav>
+
+    <div class="rail-foot">
+      {% if session.is_superadmin %}
+      <div class="rail-badge">Platform superadmin</div>
+      {% endif %}
+
+      {% if orgs and orgs|length > 1 %}
+      <form method="post" action="/switch-org" class="rail-org">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <select name="org_id" onchange="this.form.submit()" aria-label="Workspace">
+          {% for o in orgs %}
+          <option value="{{ o.id }}" {% if o.id == org.id %}selected{% endif %}>
+            {{ o.name }}
+          </option>
+          {% endfor %}
+        </select>
+      </form>
+      {% else %}
+      <div class="rail-org-static">{{ org.name }}</div>
+      {% endif %}
+
+      <div class="rail-account">
+        <a href="/account" class="rail-me {% if active == 'account' %}is-active{% endif %}"
+           title="Your account settings">
+          <span class="rail-avatar">
+            {{ (session.name or session.email)[:1] | upper }}
+          </span>
+          <span class="rail-who">
+            <span class="rail-who-name">{{ session.name or session.email.split('@')[0] }}</span>
+            <span class="rail-who-role">{{ org.role }}</span>
+          </span>
+          <svg class="rail-me-cog" viewBox="0 0 20 20" aria-hidden="true">
+            <circle cx="10" cy="10" r="2.4" fill="none" stroke="currentColor"
+                    stroke-width="1.6"/>
+            <path d="M10 2.6v1.8M10 15.6v1.8M17.4 10h-1.8M4.4 10H2.6M15.2 4.8l-1.3 1.3M6.1 13.9l-1.3 1.3M15.2 15.2l-1.3-1.3M6.1 6.1L4.8 4.8"
+                  stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <form method="post" action="/logout">
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+          <button type="submit" class="rail-signout" title="Sign out"
+                  aria-label="Sign out">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M8 3.5H4.8A1.3 1.3 0 003.5 4.8v10.4A1.3 1.3 0 004.8 16.5H8"
+                    fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round"/>
+              <path d="M12.5 13l3-3-3-3M15.5 10H7.5" fill="none" stroke="currentColor"
+                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </aside>
+
+  <div class="viewport">
+    <header class="mobile-bar">
+      <label for="nav-toggle" class="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </label>
+      <span class="mobile-title">Model Forge</span>
+    </header>
+
+    <main class="{% block main_class %}page{% endblock %}">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+
+{% else %}
+{# Signed out (login, signup, join): no rail, the page owns the viewport.
+   Same blocks, reached through self.* so each is declared exactly once. #}
+<main class="{{ self.main_class() }}">
+  {{ self.content() }}
+</main>
+{% endif %}
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

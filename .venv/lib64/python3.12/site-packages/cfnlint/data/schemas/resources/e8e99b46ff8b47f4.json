@@ -1,0 +1,276 @@
+{
+ "additionalIdentifiers": [
+  [
+   "/properties/VocabularyFilterName"
+  ]
+ ],
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/VocabularyFilterName",
+  "/properties/LanguageCode"
+ ],
+ "definitions": {
+  "Tag": {
+   "additionalProperties": false,
+   "properties": {
+    "Key": {
+     "description": "The key of the tag.",
+     "maxLength": 128,
+     "minLength": 1,
+     "type": "string"
+    },
+    "Value": {
+     "description": "The value of the tag.",
+     "maxLength": 256,
+     "minLength": 0,
+     "type": "string"
+    }
+   },
+   "required": [
+    "Key",
+    "Value"
+   ],
+   "type": "object"
+  }
+ },
+ "description": "Creates a custom vocabulary filter that you can use to mask, delete, or flag specific words from your transcript.",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "transcribe:CreateVocabularyFilter",
+    "transcribe:GetVocabularyFilter",
+    "transcribe:ListTagsForResource",
+    "transcribe:TagResource",
+    "iam:PassRole"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "transcribe:DeleteVocabularyFilter",
+    "transcribe:GetVocabularyFilter",
+    "transcribe:ListTagsForResource"
+   ]
+  },
+  "list": {
+   "permissions": [
+    "transcribe:ListVocabularyFilters"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "transcribe:GetVocabularyFilter",
+    "transcribe:ListTagsForResource"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "transcribe:UpdateVocabularyFilter",
+    "transcribe:GetVocabularyFilter",
+    "transcribe:TagResource",
+    "transcribe:UntagResource",
+    "transcribe:ListTagsForResource",
+    "iam:PassRole"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Arn"
+ ],
+ "properties": {
+  "Arn": {
+   "description": "The Amazon Resource Name (ARN) of the vocabulary filter.",
+   "type": "string"
+  },
+  "DataAccessRoleArn": {
+   "description": "The Amazon Resource Name (ARN) of an IAM role that has permissions to access the Amazon S3 bucket that contains your input files.",
+   "format": "AWS::IAM::Role.Arn",
+   "maxLength": 2048,
+   "minLength": 20,
+   "pattern": "^arn:(aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):iam::[0-9]{0,63}:role/[A-Za-z0-9:_/+=,@.-]{0,1024}$",
+   "type": "string"
+  },
+  "LanguageCode": {
+   "description": "The language code that represents the language of the entries in your vocabulary filter.",
+   "enum": [
+    "ab-GE",
+    "af-ZA",
+    "am-ET",
+    "ar-AE",
+    "ar-SA",
+    "ast-ES",
+    "az-AZ",
+    "ba-RU",
+    "be-BY",
+    "bg-BG",
+    "bn-IN",
+    "bs-BA",
+    "ca-ES",
+    "ckb-IQ",
+    "ckb-IR",
+    "cs-CZ",
+    "cy-GB",
+    "cy-WL",
+    "da-DK",
+    "de-CH",
+    "de-DE",
+    "el-GR",
+    "en-AB",
+    "en-AU",
+    "en-GB",
+    "en-IE",
+    "en-IN",
+    "en-NZ",
+    "en-US",
+    "en-WL",
+    "en-ZA",
+    "es-ES",
+    "es-MX",
+    "es-US",
+    "et-EE",
+    "et-ET",
+    "eu-ES",
+    "fa-AF",
+    "fa-IR",
+    "fi-FI",
+    "fr-CA",
+    "fr-FR",
+    "ga-IE",
+    "gd-GB",
+    "gl-ES",
+    "gu-IN",
+    "ha-NG",
+    "he-IL",
+    "hi-IN",
+    "hr-HR",
+    "ht-HT",
+    "hu-HU",
+    "hy-AM",
+    "id-ID",
+    "is-IS",
+    "it-IT",
+    "ja-JP",
+    "jv-ID",
+    "ka-GE",
+    "kab-DZ",
+    "kk-KZ",
+    "km-KH",
+    "kn-IN",
+    "ko-KR",
+    "ky-KG",
+    "lg-IN",
+    "lt-LT",
+    "lv-LV",
+    "mhr-RU",
+    "mi-NZ",
+    "mk-MK",
+    "ml-IN",
+    "mn-MN",
+    "mr-IN",
+    "ms-MY",
+    "mt-MT",
+    "my-MM",
+    "ne-NP",
+    "nl-NL",
+    "no-NO",
+    "or-IN",
+    "pa-IN",
+    "pl-PL",
+    "ps-AF",
+    "pt-BR",
+    "pt-PT",
+    "ro-RO",
+    "ru-RU",
+    "rw-RW",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "so-SO",
+    "sq-AL",
+    "sr-RS",
+    "su-ID",
+    "sv-SE",
+    "sw-BI",
+    "sw-KE",
+    "sw-RW",
+    "sw-TZ",
+    "sw-UG",
+    "ta-IN",
+    "te-IN",
+    "th-TH",
+    "tl-PH",
+    "tr-TR",
+    "tt-RU",
+    "ug-CN",
+    "uk-UA",
+    "uz-UZ",
+    "vi-VN",
+    "wo-SN",
+    "zh-CN",
+    "zh-HK",
+    "zh-TW",
+    "zu-ZA"
+   ],
+   "type": "string"
+  },
+  "Tags": {
+   "description": "Tags associated with the vocabulary filter.",
+   "insertionOrder": false,
+   "items": {
+    "$ref": "#/definitions/Tag"
+   },
+   "maxItems": 200,
+   "minItems": 1,
+   "type": "array"
+  },
+  "VocabularyFilterFileUri": {
+   "description": "The Amazon S3 location of the text file that contains your custom vocabulary filter terms.",
+   "maxLength": 2000,
+   "minLength": 1,
+   "pattern": "^(s3://|http(s*)://).+$",
+   "type": "string"
+  },
+  "VocabularyFilterName": {
+   "description": "A unique name, chosen by you, for your custom vocabulary filter.",
+   "maxLength": 200,
+   "minLength": 1,
+   "pattern": "^[0-9a-zA-Z._-]+$",
+   "type": "string"
+  },
+  "Words": {
+   "description": "Use this parameter if you want to create your custom vocabulary filter by including all desired terms, as comma-separated values, within your request.",
+   "insertionOrder": false,
+   "items": {
+    "maxLength": 256,
+    "minLength": 1,
+    "type": "string"
+   },
+   "minItems": 1,
+   "type": "array"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn"
+ ],
+ "required": [
+  "VocabularyFilterName",
+  "LanguageCode"
+ ],
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "permissions": [
+   "transcribe:TagResource",
+   "transcribe:UntagResource",
+   "transcribe:ListTagsForResource"
+  ],
+  "tagOnCreate": true,
+  "tagProperty": "/properties/Tags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::Transcribe::VocabularyFilter",
+ "writeOnlyProperties": [
+  "/properties/Words",
+  "/properties/VocabularyFilterFileUri",
+  "/properties/DataAccessRoleArn"
+ ]
+}

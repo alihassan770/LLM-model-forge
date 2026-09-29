@@ -1,0 +1,106 @@
+{% extends "app_base.html" %}
+{% block title %}Dashboard · Model Forge{% endblock %}
+
+{% block page %}
+{#  The hero carries the brand surface, so the page has an obvious place to
+    start rather than being a stack of equal-weight white cards.
+
+    Deliberately no looping animation. A panel that stays on screen and keeps
+    moving is motion in the corner of the eye with nothing to report; it earns
+    attention it then wastes. The entrance plays once and stops. #}
+<section class="hero rise">
+  <div class="hero-wash"></div>
+  <div class="hero-grid"></div>
+  <span class="hero-glow hero-glow-a"></span>
+  <span class="hero-glow hero-glow-b"></span>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">{{ org.name }}</p>
+      <h1 class="hero-title">
+        {{ greeting }}, <span class="hero-name">{{ first_name }}</span>
+      </h1>
+      <p class="hero-sub">
+        {{ today.strftime('%A, %-d %B') }} · you are
+        <b>{{ org.role }}</b> here.
+        {% if stats.members > 1 %}
+          {{ stats.members }} people in this workspace.
+        {% else %}
+          You are the only member so far.
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a href="/projects/new" class="btn btn-onhero">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 4.5v11M4.5 10h11" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round"/>
+        </svg>
+        New project
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat">
+      <span class="hstat-n">{{ stats.projects }}</span>
+      <span class="hstat-l">{{ 'Project' if stats.projects == 1 else 'Projects' }}</span>
+    </div>
+    <div class="hstat">
+      <span class="hstat-n">{{ stats.builds }}</span>
+      <span class="hstat-l">{{ 'Model built' if stats.builds == 1 else 'Models built' }}</span>
+    </div>
+    <div class="hstat">
+      <span class="hstat-n">{{ stats.members }}</span>
+      <span class="hstat-l">{{ 'Member' if stats.members == 1 else 'Members' }}</span>
+    </div>
+    <div class="hstat">
+      <span class="hstat-n">{{ stats.events }}</span>
+      <span class="hstat-l">Events logged</span>
+    </div>
+  </div>
+</section>
+
+{% if not ai.key_status.set and org.role in ('admin', 'manager') %}
+<div class="alert alert-warn">
+  <strong>No API key configured.</strong>
+  Uploads cannot be analysed until a key is set for {{ ai.provider.label }}.
+  <a href="/settings">Open settings →</a>
+</div>
+{% elif not ai.model.vision and org.role in ('admin', 'manager') %}
+<div class="alert alert-warn">
+  <strong>{{ ai.model.label }} cannot read images.</strong>
+  This pipeline starts by looking at a photo or PDF.
+  <a href="/settings">Choose a vision model →</a>
+</div>
+{% endif %}
+
+<section class="card card-accent accent-teal">
+  <div class="sect">
+    <span class="sect-icon ic-teal">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 5.8V10l2.8 1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <div class="sect-text">
+      <h2>Recent activity</h2>
+      <p>What has happened in this workspace</p>
+    </div>
+  </div>
+
+  {% if activity %}
+  <table class="table">
+    <tbody>
+      {% for row in activity %}
+      <tr>
+        <td class="nowrap muted">{{ row.created_at.strftime('%d %b %H:%M') }}</td>
+        <td><span class="action-chip">{{ row.action }}</span></td>
+        <td class="muted">{{ row.actor_email or ' - ' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="muted empty">Nothing here yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

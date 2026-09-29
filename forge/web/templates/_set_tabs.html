@@ -1,0 +1,34 @@
+{#  The strip across the top of Account and Settings.
+
+    Both pages are "things you configure", and they were previously reachable
+    only from different places in the menu - so someone looking for their
+    password in Settings found nothing and assumed it did not exist. Two tabs
+    make each page a door to the other.
+
+    Settings is admin/manager only, so the tab is hidden for a plain user
+    rather than shown and then refused.  #}
+<nav class="set-tabs" aria-label="Settings sections">
+  <a href="/account" class="set-tab {% if active == 'account' %}is-on{% endif %}">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="6.8" r="3.1" fill="none" stroke="currentColor"
+              stroke-width="1.6"/>
+      <path d="M3.8 17c0-3.3 2.8-5.3 6.2-5.3s6.2 2 6.2 5.3" fill="none"
+            stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <span>Your account</span>
+    <span class="set-tab-sub">Account</span>
+  </a>
+
+  {% if org.role in ('admin', 'manager') %}
+  <a href="/settings" class="set-tab {% if active == 'settings' %}is-on{% endif %}">
+    <svg viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="10" cy="10" r="2.6" fill="none" stroke="currentColor"
+              stroke-width="1.6"/>
+      <path d="M10 2.2v2M10 15.8v2M17.8 10h-2M4.2 10h-2M15.5 4.5l-1.4 1.4M5.9 14.1l-1.4 1.4M15.5 15.5l-1.4-1.4M5.9 5.9L4.5 4.5"
+            stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <span>Workspace &amp; AI</span>
+    <span class="set-tab-sub">Workspace</span>
+  </a>
+  {% endif %}
+</nav>

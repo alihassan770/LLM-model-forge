@@ -1,0 +1,448 @@
+{
+ "additionalIdentifiers": [
+  [
+   "/properties/IdentityStoreId",
+   "/properties/UserId"
+  ]
+ ],
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/IdentityStoreId",
+  "/properties/UserName",
+  "/properties/Emails",
+  "/properties/Addresses",
+  "/properties/PhoneNumbers",
+  "/properties/Photos",
+  "/properties/Roles"
+ ],
+ "description": "Creates a user within the specified identity store.",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "identitystore:CreateUser",
+    "identitystore:DescribeUser"
+   ]
+  },
+  "delete": {
+   "permissions": [
+    "identitystore:DeleteUser",
+    "identitystore:DescribeUser"
+   ]
+  },
+  "list": {
+   "handlerSchema": {
+    "properties": {
+     "IdentityStoreId": {
+      "maxLength": 36,
+      "minLength": 1,
+      "pattern": "^d-[0-9a-f]{10}$|^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "string"
+     }
+    },
+    "required": [
+     "IdentityStoreId"
+    ]
+   },
+   "permissions": [
+    "identitystore:ListUsers"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "identitystore:DescribeUser"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "identitystore:UpdateUser",
+    "identitystore:DescribeUser"
+   ]
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/Arn"
+ ],
+ "properties": {
+  "Addresses": {
+   "description": "A list of addresses associated with the user.",
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "Country": {
+      "description": "The country of the address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Formatted": {
+      "description": "A formatted version of the address for display.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Locality": {
+      "description": "A string of the address locality.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "PostalCode": {
+      "description": "The postal code of the address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Primary": {
+      "description": "Whether this is the primary address.",
+      "type": "boolean"
+     },
+     "Region": {
+      "description": "The region of the address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "StreetAddress": {
+      "description": "The street of the address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Type": {
+      "description": "The type of address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "Arn": {
+   "description": "The Amazon Resource Name (ARN) of the user.",
+   "type": "string"
+  },
+  "Birthdate": {
+   "description": "The user's birthdate in YYYY-MM-DD format.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "CreatedAt": {
+   "description": "The date and time the user was created.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "CreatedBy": {
+   "description": "The identifier of the user or system that created the user.",
+   "type": "string"
+  },
+  "DisplayName": {
+   "description": "A string containing the name of the user for display.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "Emails": {
+   "description": "A list of email addresses associated with the user.",
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "Primary": {
+      "description": "Whether this is the primary email address.",
+      "type": "boolean"
+     },
+     "Type": {
+      "description": "The type of email address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Value": {
+      "description": "The email address.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "IdentityStoreId": {
+   "description": "The globally unique identifier for the identity store.",
+   "maxLength": 36,
+   "minLength": 1,
+   "pattern": "^d-[0-9a-f]{10}$|^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+   "type": "string"
+  },
+  "Locale": {
+   "description": "The geographical region or location of the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "Name": {
+   "additionalProperties": false,
+   "description": "The name of the user.",
+   "properties": {
+    "FamilyName": {
+     "description": "The family name of the user.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    },
+    "Formatted": {
+     "description": "A string containing a formatted version of the name for display.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    },
+    "GivenName": {
+     "description": "The given name of the user.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    },
+    "HonorificPrefix": {
+     "description": "The honorific prefix of the user.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    },
+    "HonorificSuffix": {
+     "description": "The honorific suffix of the user.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    },
+    "MiddleName": {
+     "description": "The middle name of the user.",
+     "maxLength": 1024,
+     "minLength": 1,
+     "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "NickName": {
+   "description": "An alternate name for the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "PhoneNumbers": {
+   "description": "A list of phone numbers associated with the user.",
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "Primary": {
+      "description": "Whether this is the primary phone number.",
+      "type": "boolean"
+     },
+     "Type": {
+      "description": "The type of phone number.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Value": {
+      "description": "The phone number.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "Photos": {
+   "description": "A list of photos associated with the user.",
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "Display": {
+      "description": "A display name for the photo.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Primary": {
+      "description": "Whether this is the primary photo.",
+      "type": "boolean"
+     },
+     "Type": {
+      "description": "The type of photo.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Value": {
+      "description": "The photo data or URL.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     }
+    },
+    "required": [
+     "Value"
+    ],
+    "type": "object"
+   },
+   "maxItems": 3,
+   "minItems": 1,
+   "type": "array"
+  },
+  "PreferredLanguage": {
+   "description": "The preferred language of the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "ProfileUrl": {
+   "description": "A URL associated with the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "Roles": {
+   "description": "A list of roles associated with the user.",
+   "items": {
+    "additionalProperties": false,
+    "properties": {
+     "Primary": {
+      "description": "Whether this is the primary role.",
+      "type": "boolean"
+     },
+     "Type": {
+      "description": "The type of role.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     },
+     "Value": {
+      "description": "The role name.",
+      "maxLength": 1024,
+      "minLength": 1,
+      "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+      "type": "string"
+     }
+    },
+    "type": "object"
+   },
+   "maxItems": 1,
+   "minItems": 1,
+   "type": "array"
+  },
+  "Timezone": {
+   "description": "The time zone for the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "Title": {
+   "description": "The title of the user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "UpdatedAt": {
+   "description": "The date and time the user was last updated.",
+   "format": "date-time",
+   "type": "string"
+  },
+  "UpdatedBy": {
+   "description": "The identifier of the user or system that last updated the user.",
+   "type": "string"
+  },
+  "UserId": {
+   "description": "The identifier for a user in the identity store.",
+   "maxLength": 47,
+   "minLength": 1,
+   "pattern": "^([0-9a-f]{10}-|)[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}$",
+   "type": "string"
+  },
+  "UserName": {
+   "description": "A unique string used to identify the user.",
+   "maxLength": 128,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+$",
+   "type": "string"
+  },
+  "UserStatus": {
+   "description": "The current status of the user account.",
+   "enum": [
+    "ENABLED",
+    "DISABLED"
+   ],
+   "type": "string"
+  },
+  "UserType": {
+   "description": "A string indicating the type of user.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  },
+  "Website": {
+   "description": "The user's personal website or blog URL.",
+   "maxLength": 1024,
+   "minLength": 1,
+   "pattern": "^[\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}\\t\\n\\r \u00a0\u3000]+$",
+   "type": "string"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/UserId",
+  "/properties/UserStatus",
+  "/properties/CreatedAt",
+  "/properties/CreatedBy",
+  "/properties/UpdatedAt",
+  "/properties/UpdatedBy"
+ ],
+ "required": [
+  "IdentityStoreId"
+ ],
+ "tagging": {
+  "taggable": false
+ },
+ "typeName": "AWS::IdentityStore::User"
+}

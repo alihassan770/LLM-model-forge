@@ -1,0 +1,88 @@
+{% extends "app_base.html" %}
+{% block title %}Members · Model Forge{% endblock %}
+
+{% block page %}
+<div class="page-head">
+  <div>
+    <h1>Members</h1>
+    <p class="muted">Who can use {{ org.name }}, and what they can do.</p>
+  </div>
+</div>
+
+{% if notice %}<div class="alert alert-ok">{{ notice }}</div>{% endif %}
+{% if error %}<div class="alert alert-error">{{ error }}</div>{% endif %}
+
+
+<section class="card flush card-accent accent-blue">
+  <div class="sect">
+    <span class="sect-icon ic-blue">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="7.6" cy="7" r="2.8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M2.4 16.4c0-2.9 2.3-4.6 5.2-4.6s5.2 1.7 5.2 4.6" fill="none"
+              stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M13.6 5.1a2.6 2.6 0 010 4.6M14.6 11.9c1.8.4 3 1.8 3 4"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <div class="sect-text">
+      <h2>People</h2>
+      <p>{{ members|length }} with access to this workspace</p>
+    </div>
+  </div>
+  <table class="table table-flush">
+    <thead>
+      <tr><th>Person</th><th>Role</th><th>Last seen</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for m in members %}
+      <tr>
+        <td>
+          <div class="who">{{ m.name or m.email.split('@')[0] }}
+            {% if m.id == session.user_id %}<span class="you">you</span>{% endif %}
+          </div>
+          <small class="muted">{{ m.email }}</small>
+        </td>
+        <td>
+          {% if m.id == session.user_id %}
+            {# Changing your own role is blocked server-side too; showing a
+               dropdown you cannot use would only invite the attempt. #}
+            <span class="badge">{{ m.role }}</span>
+          {% else %}
+          <form method="post" action="/members/role" class="inline-form">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="hidden" name="user_id" value="{{ m.id }}">
+            <select name="role" class="role-select role-{{ m.role }}"
+                    onchange="this.form.submit()">
+              {% for r in all_roles %}
+              <option value="{{ r }}" {% if r == m.role %}selected{% endif %}>{{ r }}</option>
+              {% endfor %}
+            </select>
+          </form>
+          {% endif %}
+        </td>
+        <td class="muted nowrap">
+          {% if m.last_login_at %}{{ m.last_login_at.strftime('%d %b %Y') }}
+          {% else %}<span class="muted">never</span>{% endif %}
+        </td>
+        <td class="right">
+          {% if m.id != session.user_id %}
+          <form method="post" action="/members/remove" class="inline-form"
+                onsubmit="return confirm('Remove {{ m.email }} from {{ org.name }}?');">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="hidden" name="user_id" value="{{ m.id }}">
+            <button type="submit" class="btn btn-ghost btn-sm danger">Remove</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('settings.js') }}" defer></script>
+{% endblock %}

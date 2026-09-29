@@ -1,0 +1,344 @@
+{
+ "additionalProperties": false,
+ "definitions": {
+  "AuthConfig": {
+   "additionalProperties": false,
+   "properties": {
+    "AuthArn": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    },
+    "AuthType": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "IdentitySource": {
+     "description": "The identity source for which authorization is requested.\n For a ``REQUEST`` authorizer, this is optional. The value is a set of one or more mapping expressions of the specified request parameters. The identity source can be headers, query string parameters, stage variables, and context parameters. For example, if an Auth header and a Name query string parameter are defined as identity sources, this value is route.request.header.Auth, route.request.querystring.Name for WebSocket APIs. For HTTP APIs, use selection expressions prefixed with ``$``, for example, ``$request.header.Auth``, ``$request.querystring.Name``. These parameters are used to perform runtime validation for Lambda-based authorizers by verifying all of the identity-related request parameters are present in the request, not null, and non-empty. Only when this is true does the authorizer invoke the authorizer Lambda function. Otherwise, it returns a 401 Unauthorized response without calling the Lambda function. For HTTP APIs, identity sources are also used as the cache key when caching is enabled. To learn more, see [Working with Lambda authorizers for HTTP APIs](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-lambda-authorizer.html).\n For ``JWT``, a single entry that specifies where to extract the JSON Web Token (JWT) from inbound requests. Currently only header-based and query parameter-based selections are supported, for example ``$request.header.Authorization``.",
+     "items": {
+      "type": "string"
+     },
+     "type": "array",
+     "uniqueItems": false
+    },
+    "InvokeRole": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    },
+    "Name": {
+     "description": "The name of the authorizer.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "AuthType"
+   ],
+   "type": "object"
+  },
+  "Domain": {
+   "additionalProperties": false,
+   "properties": {
+    "BasePath": {
+     "items": {
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "CertificateArn": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "DomainName": {
+     "description": "",
+     "type": "string"
+    },
+    "EndpointConfiguration": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "REGIONAL"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "MutualTlsAuthentication": {
+     "additionalProperties": false,
+     "description": "",
+     "properties": {
+      "TruststoreUri": {
+       "description": "",
+       "type": "string"
+      },
+      "TruststoreVersion": {
+       "description": "",
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "OwnershipVerificationCertificateArn": {
+     "description": "The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the RegionalCertificateArn.",
+     "type": "string"
+    },
+    "Route53": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/Route53"
+      }
+     ]
+    },
+    "SecurityPolicy": {
+     "description": "",
+     "type": "string"
+    }
+   },
+   "required": [
+    "CertificateArn",
+    "DomainName"
+   ],
+   "type": "object"
+  },
+  "PassThroughProp": {},
+  "Route53": {
+   "additionalProperties": false,
+   "properties": {
+    "EvaluateTargetHealth": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "HostedZoneId": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "HostedZoneName": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "IpV6": {
+     "type": "boolean"
+    },
+    "Region": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    },
+    "SetIdentifier": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/PassThroughProp"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "WebSocketApiRoute": {
+   "additionalProperties": false,
+   "properties": {
+    "ApiKeyRequired": {
+     "description": "Specifies whether an API key is required for the route. Supported only for WebSocket APIs.",
+     "type": "boolean"
+    },
+    "FunctionArn": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    },
+    "IntegrationTimeout": {
+     "description": "Custom timeout between 50 and 29000 milliseconds for WebSocket APIs and between 50 and 30000 milliseconds for HTTP APIs. The default timeout is 29 seconds for WebSocket APIs and 30 seconds for HTTP APIs.",
+     "type": "integer"
+    },
+    "ModelSelectionExpression": {
+     "description": "The model selection expression for the route. Supported only for WebSocket APIs.",
+     "type": "string"
+    },
+    "OperationName": {
+     "description": "The operation name for the route.",
+     "type": "string"
+    },
+    "RequestModels": {
+     "format": "json",
+     "type": [
+      "object",
+      "string"
+     ]
+    },
+    "RequestParameters": {
+     "description": "The request parameters for the route. Supported only for WebSocket APIs.",
+     "format": "json",
+     "items": {
+      "additionalProperties": false,
+      "description": "",
+      "properties": {
+       "Required": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "Required"
+      ],
+      "type": "object"
+     },
+     "type": "object"
+    },
+    "RouteResponseSelectionExpression": {
+     "description": "The route response selection expression for the route. Supported only for WebSocket APIs.",
+     "type": "string"
+    }
+   },
+   "required": [
+    "FunctionArn"
+   ],
+   "type": "object"
+  }
+ },
+ "properties": {
+  "AccessLogSettings": {
+   "additionalProperties": false,
+   "description": "Settings for logging access in this stage.",
+   "properties": {
+    "DestinationArn": {
+     "type": "string"
+    },
+    "Format": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ApiKeySelectionExpression": {
+   "description": "An API key selection expression. Supported only for WebSocket APIs. See [API Key Selection Expressions](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-websocket-api-selection-expressions.html#apigateway-websocket-api-apikey-selection-expressions).",
+   "type": "string"
+  },
+  "Auth": {
+   "allOf": [
+    {
+     "$ref": "#/definitions/AuthConfig"
+    }
+   ]
+  },
+  "DefaultRouteSettings": {
+   "additionalProperties": false,
+   "description": "The default route settings for the stage.",
+   "properties": {
+    "DataTraceEnabled": {
+     "type": "boolean"
+    },
+    "DetailedMetricsEnabled": {
+     "type": "boolean"
+    },
+    "LoggingLevel": {
+     "type": "string"
+    },
+    "ThrottlingBurstLimit": {
+     "type": "integer"
+    },
+    "ThrottlingRateLimit": {
+     "type": "number"
+    }
+   },
+   "type": "object"
+  },
+  "Description": {
+   "type": "string"
+  },
+  "DisableExecuteApiEndpoint": {
+   "description": "Specifies whether clients can invoke your API by using the default ``execute-api`` endpoint. By default, clients can invoke your API with the default https://{api_id}.execute-api.{region}.amazonaws.com endpoint. To require that clients use a custom domain name to invoke your API, disable the default endpoint.",
+   "type": "boolean"
+  },
+  "DisableSchemaValidation": {
+   "type": "boolean"
+  },
+  "Domain": {
+   "allOf": [
+    {
+     "$ref": "#/definitions/Domain"
+    }
+   ]
+  },
+  "IpAddressType": {
+   "description": "The IP address types that can invoke the API. Use ``ipv4`` to allow only IPv4 addresses to invoke your API, or use ``dualstack`` to allow both IPv4 and IPv6 addresses to invoke your API.\n Don\u2019t use IP address type for an HTTP API based on an OpenAPI specification. Instead, specify the IP address type in the OpenAPI specification.",
+   "type": "string"
+  },
+  "Name": {
+   "description": "The name of the API. Required unless you specify an OpenAPI definition for ``Body`` or ``S3BodyLocation``.",
+   "type": "string"
+  },
+  "PropagateTags": {
+   "type": "boolean"
+  },
+  "RouteSelectionExpression": {
+   "description": "The route selection expression for the API. For HTTP APIs, the ``routeSelectionExpression`` must be ``${request.method} ${request.path}``. If not provided, this will be the default for HTTP APIs. This property is required for WebSocket APIs.",
+   "type": "string"
+  },
+  "RouteSettings": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  },
+  "Routes": {
+   "additionalProperties": {
+    "$ref": "#/definitions/WebSocketApiRoute"
+   },
+   "type": "object"
+  },
+  "StageName": {
+   "description": "The stage name. Stage names can contain only alphanumeric characters, hyphens, and underscores, or be $default. Maximum length is 128 characters.",
+   "type": "string"
+  },
+  "StageVariables": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  },
+  "Tags": {
+   "type": "object"
+  }
+ },
+ "required": [
+  "Routes",
+  "RouteSelectionExpression"
+ ],
+ "typeName": "AWS::Serverless::WebSocketApi"
+}

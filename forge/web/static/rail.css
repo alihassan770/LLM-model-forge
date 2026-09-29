@@ -1,0 +1,370 @@
+/* Model Forge - the left navigation rail.
+   Brand, then the menu directly beneath it, then workspace and account at the
+   foot of the column. */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+@media (min-width: 900px) {
+  .layout { grid-template-columns: 236px 1fr; }
+}
+
+/* ------------------------------------------------------------------- rail */
+
+.rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* Start at the top and stay there. The foot is pushed down by its own
+     margin-top:auto below, so the menu never drifts towards the middle of a
+     tall window. */
+  justify-content: flex-start;
+  background: linear-gradient(180deg, #123253 0%, #0c2340 45%, #071726 100%);
+  color: #fff;
+  padding: 16px 14px 14px;
+  z-index: 40;
+}
+
+/* One warm light source at the top, matching the dashboard hero so the two
+   dark surfaces read as the same material.
+
+   A pseudo-element, not a child div. As a child it needed `position:absolute`
+   to stay out of the flow, but the `.rail > *` rule below re-set every child to
+   `position:relative` at equal specificity - so the glow won, became a 300px
+   block in the column, and pushed the brand and menu down by its own height.
+   A pseudo-element cannot be caught by `.rail > *`, so the bug cannot recur. */
+.rail::before {
+  content: "";
+  /* Fixed rather than absolute: an absolutely-positioned glow scrolls with the
+     rail's content, so it would slide out of view the moment the menu is long
+     enough to scroll. */
+  position: fixed;
+  top: -120px; left: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(232, 161, 58, .22);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+.rail > * { position: relative; z-index: 1; }
+
+/* ------------------------------------------------------------------ brand */
+
+.rail-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 2px 8px 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, .09);
+  color: #fff;
+  flex: none;
+}
+.rail-brand:hover { text-decoration: none; }
+.rail-brand .brand-mark {
+  background: linear-gradient(135deg, #e8a13a, #d4744a);
+  box-shadow: 0 5px 16px rgba(232, 161, 58, .34);
+  transition: transform .22s cubic-bezier(.3, .7, .3, 1);
+}
+.rail-brand:hover .brand-mark { transform: rotate(-8deg) scale(1.06); }
+
+.rail-brand-text { display: grid; gap: 1px; }
+.rail-brand-name { font-size: 14.5px; font-weight: 650; letter-spacing: -.01em; }
+.rail-brand-sub {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, .5);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------- nav */
+
+/* No flex:1 here. Stretching the nav is what pulled the links towards the
+   middle of the column; it now takes only the height it needs and sits
+   directly under the brand. */
+.rail-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: none;
+}
+
+.rail-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  color: rgba(255, 255, 255, .72);
+  font-size: 13.5px;
+  font-weight: 550;
+  transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+.rail-link svg { width: 17px; height: 17px; flex: none; }
+.rail-link:hover {
+  background: rgba(255, 255, 255, .07);
+  color: #fff;
+  text-decoration: none;
+  transform: translateX(2px);
+}
+
+.rail-link.is-active { background: rgba(255, 255, 255, .11); color: #fff; }
+
+/* The marker slides in rather than appearing, so moving between pages reads as
+   one thing moving rather than two things blinking. */
+.rail-link.is-active::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 3px;
+  height: 20px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, #f0b45e, #d4744a);
+  transform: translateY(-50%) scaleY(0);
+  animation: markerIn .32s cubic-bezier(.2, .8, .3, 1) forwards;
+}
+@keyframes markerIn { to { transform: translateY(-50%) scaleY(1); } }
+
+.rail-link.is-soon { opacity: .42; pointer-events: none; }
+.rail-soon {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .12);
+}
+
+/* ------------------------------------------------------------------- foot */
+
+/* margin-top:auto does the pushing, so everything above keeps its natural
+   height and position. */
+.rail-foot {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, .10);
+}
+
+.rail-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 6px;
+  color: #f4d5a8;
+  background: rgba(232, 161, 58, .14);
+  border: 1px solid rgba(232, 161, 58, .3);
+}
+
+.rail-org select,
+.rail-org-static {
+  width: 100%;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 550;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  background: rgba(255, 255, 255, .06);
+  color: #fff;
+}
+.rail-org select { cursor: pointer; }
+.rail-org select option { color: #14293f; }
+.rail-org select:focus { outline: none; border-color: rgba(232, 161, 58, .55); }
+.rail-org-static { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.rail-account {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+}
+
+/* The identity half is the link to your own settings. It has to look
+   pressable, or it is a link nobody discovers: hovering lifts the background
+   and brings in a cog on the right. */
+.rail-me {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  min-width: 0;
+  padding: 5px 6px;
+  border-radius: 10px;
+  color: inherit;
+  transition: background .15s ease;
+}
+.rail-me:hover,
+.rail-me.is-active { background: rgb(255 255 255 / .09); text-decoration: none; }
+.rail-me:hover .rail-who-name { color: #fff; }
+
+.rail-me-cog {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  margin-left: auto;
+  opacity: 0;
+  color: rgb(255 255 255 / .6);
+  transform: rotate(-35deg);
+  transition: opacity .16s ease, transform .3s ease;
+}
+.rail-me:hover .rail-me-cog,
+.rail-me.is-active .rail-me-cog { opacity: 1; transform: rotate(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-me, .rail-me-cog { transition: none !important; }
+  .rail-me-cog { transform: none; }
+}
+
+.rail-avatar {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  flex: none;
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0c2340;
+  background: linear-gradient(135deg, #f0b45e, #e8a13a);
+}
+
+.rail-who { display: grid; gap: 1px; min-width: 0; flex: 1; }
+.rail-who-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rail-who-role {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, .5);
+  text-transform: capitalize;
+}
+
+.rail-signout {
+  display: grid;
+  place-items: center;
+  width: 30px; height: 30px;
+  flex: none;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, .55);
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease;
+}
+.rail-signout svg { width: 17px; height: 17px; }
+.rail-signout:hover { background: rgba(255, 255, 255, .11); color: #fff; }
+
+/* The rail stays put while the page scrolls.
+ *
+ * `align-self: start` is the part that is easy to miss: a grid item stretches
+ * to its row by default, so the rail would be as tall as the whole page and
+ * sticky would have no room to move. Pinning it to the start of the row and
+ * giving it the viewport height is what lets `top: 0` actually hold.
+ */
+@media (min-width: 900px) {
+  .rail {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    height: 100dvh;
+    /* If the menu ever outgrows the viewport, the rail scrolls itself rather
+       than clipping the account block off the bottom. */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .22) transparent;
+  }
+  .rail::-webkit-scrollbar { width: 7px; }
+  .rail::-webkit-scrollbar-track { background: transparent; }
+  .rail::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .18);
+    border-radius: 4px;
+  }
+  .rail:hover::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .28); }
+}
+
+/* --------------------------------------------------------------- viewport */
+
+.viewport { min-width: 0; background: var(--bg); }
+
+/* ----------------------------------------------------------------- mobile */
+
+.mobile-bar { display: none; }
+.nav-toggle, .nav-scrim { display: none; }
+
+@media (max-width: 899px) {
+  .mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 52px;
+    padding: 0 14px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+  .mobile-title { font-weight: 650; font-size: 14.5px; }
+
+  .burger { display: grid; gap: 4px; padding: 6px; cursor: pointer; }
+  .burger span {
+    display: block;
+    width: 18px; height: 2px;
+    border-radius: 2px;
+    background: var(--text);
+    transition: transform .22s ease, opacity .22s ease;
+  }
+
+  .rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 236px;
+    transform: translateX(-100%);
+    transition: transform .26s cubic-bezier(.3, .7, .3, 1);
+    box-shadow: 0 0 40px rgba(0, 0, 0, .3);
+  }
+  .nav-toggle:checked ~ .rail { transform: none; }
+
+  .nav-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 15, 28, .5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .26s ease;
+    z-index: 35;
+  }
+  .nav-toggle:checked ~ .nav-scrim { opacity: 1; pointer-events: auto; }
+
+  .nav-toggle:checked ~ .viewport .burger span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .nav-toggle:checked ~ .viewport .burger span:nth-child(2) { opacity: 0; }
+  .nav-toggle:checked ~ .viewport .burger span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-link, .rail-brand .brand-mark, .rail, .nav-scrim, .burger span,
+  .rail-signout { transition: none !important; }
+  .rail-link.is-active::before { animation: none; transform: translateY(-50%); }
+}

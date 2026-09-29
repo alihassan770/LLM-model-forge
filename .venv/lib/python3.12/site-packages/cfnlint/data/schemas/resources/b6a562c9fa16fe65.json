@@ -1,0 +1,407 @@
+{
+ "additionalProperties": false,
+ "definitions": {
+  "CloudWatchLogging": {
+   "additionalProperties": false,
+   "properties": {
+    "LogGroup": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    },
+    "LogStream": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "CpuConfiguration": {
+   "additionalProperties": false,
+   "properties": {
+    "Architecture": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ARM_64"
+       ],
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "required": [
+    "Architecture"
+   ],
+   "type": "object"
+  },
+  "Hooks": {
+   "additionalProperties": false,
+   "properties": {
+    "MicrovmHooks": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/MicrovmHooks"
+      }
+     ]
+    },
+    "MicrovmImageHooks": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/MicrovmImageHooks"
+      }
+     ]
+    },
+    "Port": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "Logging": {
+   "additionalProperties": false,
+   "properties": {
+    "CloudWatch": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/CloudWatchLogging"
+      }
+     ]
+    },
+    "Disabled": {
+     "type": "boolean"
+    }
+   },
+   "type": "object"
+  },
+  "MicrovmHooks": {
+   "additionalProperties": false,
+   "properties": {
+    "Resume": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "ResumeTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    },
+    "Run": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "RunTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    },
+    "Suspend": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "SuspendTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    },
+    "Terminate": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "TerminateTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "MicrovmImageHooks": {
+   "additionalProperties": false,
+   "properties": {
+    "Ready": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "ReadyTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    },
+    "Validate": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "enum": [
+        "ENABLED",
+        "DISABLED"
+       ],
+       "type": "string"
+      }
+     ]
+    },
+    "ValidateTimeoutInSeconds": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    }
+   },
+   "type": "object"
+  },
+  "ResourceSpec": {
+   "additionalProperties": false,
+   "properties": {
+    "MinimumMemoryInMiB": {
+     "anyOf": [
+      {
+       "type": "object"
+      },
+      {
+       "type": "integer"
+      }
+     ]
+    }
+   },
+   "required": [
+    "MinimumMemoryInMiB"
+   ],
+   "type": "object"
+  }
+ },
+ "properties": {
+  "AdditionalOsCapabilities": {
+   "items": {
+    "anyOf": [
+     {
+      "type": "object"
+     },
+     {
+      "enum": [
+       "ALL"
+      ],
+      "type": "string"
+     }
+    ]
+   },
+   "type": "array"
+  },
+  "BaseImageArn": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "BaseImageVersion": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "BuildRoleArn": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "CodeUri": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "CpuConfigurations": {
+   "items": {
+    "$ref": "#/definitions/CpuConfiguration"
+   },
+   "type": "array"
+  },
+  "Description": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "EgressNetworkConnectors": {
+   "items": {
+    "anyOf": [
+     {
+      "type": "object"
+     },
+     {
+      "type": "string"
+     }
+    ]
+   },
+   "type": "array"
+  },
+  "EnvironmentVariables": {
+   "type": "object"
+  },
+  "Hooks": {
+   "allOf": [
+    {
+     "$ref": "#/definitions/Hooks"
+    }
+   ]
+  },
+  "Logging": {
+   "allOf": [
+    {
+     "$ref": "#/definitions/Logging"
+    }
+   ]
+  },
+  "Name": {
+   "anyOf": [
+    {
+     "type": "object"
+    },
+    {
+     "type": "string"
+    }
+   ]
+  },
+  "PropagateTags": {
+   "type": "boolean"
+  },
+  "Resources": {
+   "items": {
+    "$ref": "#/definitions/ResourceSpec"
+   },
+   "type": "array"
+  },
+  "Tags": {
+   "type": "object"
+  }
+ },
+ "required": [
+  "Name",
+  "CodeUri",
+  "BaseImageArn",
+  "BaseImageVersion"
+ ],
+ "typeName": "AWS::Serverless::MicrovmImage"
+}

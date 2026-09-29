@@ -1,0 +1,1059 @@
+{
+ "assumptions": [
+  "The carcass is 645 mm tall: overall height 820 mm minus the 150 mm leg and the 25 mm top.",
+  "The three drawers sit in a row across the top of the unit with the two cupboard doors below - the sheet gives counts and a drawer front height but no layout.",
+  "Doors and drawer fronts are inset flush within the carcass openings, so the 1800 mm width and 450 mm depth include the front thickness.",
+  "A uniform 3 mm reveal is used between fronts and between fronts and carcass edges; this value is not stated.",
+  "The top is flush with the carcass sides and front (no overhang); if there is an overhang, the carcass shrinks by twice that amount.",
+  "The leg height of 150 mm is taken as floor to the underside of the carcass, and any levelling glide is assumed to sit recessed within it.",
+  "A rail frame (two long, two short) is assumed to tie the legs together beneath the carcass; the sheet does not describe the base.",
+  "The 18 mm 'carcass panel' figure is applied to the sides, bottom, dividers and fixed shelf.",
+  "Drawer boxes are assumed to be 12 mm solid oak sides and backs with a 6 mm base in grooves, on 400 mm metal side-mounted runners.",
+  "One adjustable shelf is assumed in each cupboard bay; the sheet does not mention shelving.",
+  "Pulls are assumed to be 160 mm bar handles in brass or steel, two hinges per door in the butt-hinge style, and four nylon levelling glides."
+ ],
+ "joints": [
+  {
+   "count": 8,
+   "id": "joint.leg.rail",
+   "notes": "Each of the four legs receives one long and one short base rail; solid oak, so a haunched mortise and tenon at each leg.",
+   "parts": [
+    "leg",
+    "rail.long",
+    "rail.short"
+   ],
+   "type": "mortise_tenon"
+  },
+  {
+   "count": 4,
+   "id": "joint.rail.carcass",
+   "notes": "Carcass bottom screwed down onto the rail frame.",
+   "parts": [
+    "rail.long",
+    "rail.short",
+    "carcass.bottom"
+   ],
+   "type": "butt_screwed"
+  },
+  {
+   "count": 2,
+   "id": "joint.side.bottom",
+   "notes": "Side panel to bottom panel; solid timber, dowelled or housed.",
+   "parts": [
+    "carcass.side",
+    "carcass.bottom"
+   ],
+   "type": "dowelled"
+  },
+  {
+   "count": 16,
+   "id": "joint.back.carcass",
+   "notes": "Back panel pinned and glued into a rebate around the rear of the carcass.",
+   "parts": [
+    "carcass.back",
+    "carcass.side",
+    "carcass.bottom"
+   ],
+   "type": "nailed"
+  },
+  {
+   "count": 2,
+   "id": "joint.shelf.drawer",
+   "notes": "Fixed shelf dividing drawer bank from cupboard.",
+   "parts": [
+    "shelf.drawer",
+    "carcass.side",
+    "divider.centre"
+   ],
+   "type": "dowelled"
+  },
+  {
+   "count": 4,
+   "id": "joint.divider",
+   "notes": "Vertical dividers fixed between carcass bottom and shelf, and between shelf and underside of top.",
+   "parts": [
+    "divider.drawer",
+    "divider.centre",
+    "shelf.drawer",
+    "carcass.bottom"
+   ],
+   "type": "pocket_screw"
+  },
+  {
+   "count": 6,
+   "id": "joint.top.carcass",
+   "notes": "Top held down with figure-eight buttons or angle brackets so the oak can move.",
+   "parts": [
+    "top",
+    "carcass.side",
+    "divider.centre"
+   ],
+   "type": "bracket"
+  },
+  {
+   "count": 4,
+   "id": "joint.hinge.door",
+   "notes": "Two hinges per door: outer door to side panel, inner stile side to the centre divider.",
+   "parts": [
+    "hinge",
+    "door",
+    "carcass.side"
+   ],
+   "type": "bracket"
+  },
+  {
+   "count": 3,
+   "id": "joint.handle.drawer",
+   "notes": "One pull per drawer front, through-bolted or screwed.",
+   "parts": [
+    "handle.drawer",
+    "drawer.front"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 2,
+   "id": "joint.handle.door",
+   "notes": "One pull per door.",
+   "parts": [
+    "handle.door",
+    "door"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 6,
+   "id": "joint.runner.carcass",
+   "notes": "Runner bodies screwed to the carcass sides and the drawer-bay dividers.",
+   "parts": [
+    "runner.drawer",
+    "carcass.side",
+    "divider.drawer"
+   ],
+   "type": "bolted"
+  },
+  {
+   "count": 12,
+   "id": "joint.drawer.box",
+   "notes": "Four corners per drawer box, three drawers.",
+   "parts": [
+    "drawer.side",
+    "drawer.front",
+    "drawer.back"
+   ],
+   "type": "dowelled"
+  },
+  {
+   "count": 3,
+   "id": "joint.drawer.base",
+   "notes": "Base panel floated in grooves in the sides and back.",
+   "parts": [
+    "drawer.base",
+    "drawer.side",
+    "drawer.back"
+   ],
+   "type": "glued"
+  },
+  {
+   "count": 8,
+   "id": "joint.shelf.adjustable",
+   "notes": "Shelves resting on shelf pins in the side panel and divider.",
+   "parts": [
+    "pin.shelf",
+    "shelf.adjustable",
+    "carcass.side",
+    "divider.centre"
+   ],
+   "type": "press_fit"
+  },
+  {
+   "count": 4,
+   "id": "joint.glide.leg",
+   "notes": "Levelling foot pressed or screwed into the base of each leg.",
+   "parts": [
+    "glide",
+    "leg"
+   ],
+   "type": "press_fit"
+  }
+ ],
+ "missing_dimensions": [],
+ "object": {
+  "category": "cabinet",
+  "style_notes": "Solid oak sideboard in a plain contemporary/oak-furniture idiom: 60 x 60 mm square legs lifting a 645 mm carcass clear of the floor, three drawers in a row across the top over two cupboard doors below, 18 mm panels throughout, oiled finish with no applied decoration, plinth or visible metal frame.",
+  "subtype": "sideboard",
+  "summary": "A solid oak sideboard 1800 mm wide, 450 mm deep and 820 mm high on four square 60 x 60 mm legs, with three drawers above two cupboard doors."
+ },
+ "overall": [
+  {
+   "confidence": 1.0,
+   "name": "width",
+   "note": "Overall width, stated on the specification sheet.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 1800.0
+  },
+  {
+   "confidence": 1.0,
+   "name": "depth",
+   "note": "Overall depth, stated on the specification sheet. Taken as including the closed doors.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 450.0
+  },
+  {
+   "confidence": 1.0,
+   "name": "height",
+   "note": "Overall height, stated on the specification sheet.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 820.0
+  },
+  {
+   "confidence": 1.0,
+   "name": "thickness",
+   "note": "Top thickness.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 25.0
+  },
+  {
+   "confidence": 0.97,
+   "name": "leg section",
+   "note": "Leg section stated as 60 x 60 mm, i.e. square section legs.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 60.0
+  },
+  {
+   "confidence": 0.97,
+   "name": "leg height",
+   "note": "Floor to underside of carcass.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 150.0
+  },
+  {
+   "confidence": 1.0,
+   "name": "door thickness",
+   "note": "Stated on the specification sheet.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 18.0
+  },
+  {
+   "confidence": 0.97,
+   "name": "drawer front height",
+   "note": "Stated on the specification sheet; applies to each of the three drawer fronts.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 180.0
+  },
+  {
+   "confidence": 0.97,
+   "name": "carcass panel thickness",
+   "note": "Stated on the specification sheet; applied to sides, bottom, dividers and shelf.",
+   "source": "pdf_text_layer",
+   "unit": "mm",
+   "value": 18.0
+  },
+  {
+   "confidence": 0.9,
+   "name": "carcass height",
+   "note": "820 overall - 150 leg - 25 top = 645 mm from the top of the legs to the underside of the top.",
+   "source": "derived",
+   "unit": "mm",
+   "value": 645.0
+  },
+  {
+   "confidence": 1.0,
+   "name": "runner type and length",
+   "note": "Answered by the user.",
+   "source": "user",
+   "unit": "mm",
+   "value": 400.0
+  }
+ ],
+ "parts": [
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 1.0,
+     "name": "length",
+     "note": "Overall width.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 1800.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "depth",
+     "note": "Overall depth.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "thickness",
+     "note": "Stated top thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 25.0
+    }
+   ],
+   "display_name": "Top panel",
+   "id": "top",
+   "material": "hardwood_oak",
+   "notes": "Solid oak, oiled. Assumed flush with the carcass sides and front (no overhang); if the top overhangs, the carcass dimensions shorten by twice the overhang.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "surface"
+  },
+  {
+   "count": 4,
+   "dimensions": [
+    {
+     "confidence": 0.97,
+     "name": "width",
+     "note": "Leg section 60 x 60 mm.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 60.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "depth",
+     "note": "Leg section 60 x 60 mm.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 60.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "height",
+     "note": "Stated leg height; assumed to include any levelling glide.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 150.0
+    }
+   ],
+   "display_name": "Leg",
+   "id": "leg",
+   "material": "hardwood_oak",
+   "notes": "Square section legs, one at each corner, set flush with the carcass outline. Legs assumed square (not turned) because the sheet gives a 60 x 60 section.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.85,
+     "name": "length",
+     "note": "1800 - 2 x 60 mm leg = 1680 mm between legs.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 1680.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "width",
+     "note": "Assumed to match the leg width; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 60.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "thickness",
+     "note": "Assumed to match the carcass panel thickness; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Long base rail (front and back)",
+   "id": "rail.long",
+   "material": "hardwood_oak",
+   "notes": "Rail frame tying the legs together under the carcass; assumed, not shown on the specification sheet.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.85,
+     "name": "length",
+     "note": "450 - 2 x 60 mm leg = 330 mm between legs.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 330.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "width",
+     "note": "Assumed to match the leg width; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 60.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "thickness",
+     "note": "Assumed to match the carcass panel thickness; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Short base rail (left and right)",
+   "id": "rail.short",
+   "material": "hardwood_oak",
+   "notes": "Shorter than the long rails, so listed separately for the cutting list.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.9,
+     "name": "length",
+     "note": "1800 - 2 x 18 mm side panel.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 1764.0
+    },
+    {
+     "confidence": 0.95,
+     "name": "depth",
+     "note": "Overall depth.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Carcass bottom panel",
+   "id": "carcass.bottom",
+   "material": "hardwood_oak",
+   "notes": "Forms the floor of the cupboard bays and, with the rails, carries the drawer bank above.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.9,
+     "name": "height",
+     "note": "Overall height 820 - 150 leg - 25 top.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 645.0
+    },
+    {
+     "confidence": 0.95,
+     "name": "depth",
+     "note": "Overall depth, doors inset flush, so the side panel is full depth.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Carcass side panel",
+   "id": "carcass.side",
+   "material": "hardwood_oak",
+   "notes": "In solid oak an 18 mm 450 x 645 panel would usually be built as a frame-and-panel; modelled here as a solid 18 mm board as the sheet states a plain carcass panel thickness.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.85,
+     "name": "length",
+     "note": "Fits between the side panels.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 1764.0
+    },
+    {
+     "confidence": 0.85,
+     "name": "height",
+     "note": "Full carcass height.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 645.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "thickness",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 12.0
+    }
+   ],
+   "display_name": "Back panel",
+   "id": "carcass.back",
+   "material": "hardwood_oak",
+   "notes": "Thickness is a guess; a solid oak back would usually be thinner than the carcass panels or a framed panel.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.9,
+     "name": "length",
+     "note": "Between the side panels.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 1764.0
+    },
+    {
+     "confidence": 0.95,
+     "name": "depth",
+     "note": "Overall depth.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Fixed shelf under drawer bank",
+   "id": "shelf.drawer",
+   "material": "hardwood_oak",
+   "notes": "Horizontal divider separating the three-drawer bank from the cupboard below.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.7,
+     "name": "height",
+     "note": "Drawer bank clear height, taken as the 180 mm drawer front plus 6 mm of reveals.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 186.0
+    },
+    {
+     "confidence": 0.9,
+     "name": "depth",
+     "note": "Overall depth; the front edge of the divider shows between the drawer fronts.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Drawer bay divider",
+   "id": "divider.drawer",
+   "material": "hardwood_oak",
+   "notes": "Two dividers split the 1764 mm internal width into three 576 mm drawer bays.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 1,
+   "dimensions": [
+    {
+     "confidence": 0.7,
+     "name": "height",
+     "note": "645 - 18 bottom - 18 shelf - 186 drawer bank = 423 mm.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 423.0
+    },
+    {
+     "confidence": 0.9,
+     "name": "depth",
+     "note": "Overall depth.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 450.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Cupboard centre divider",
+   "id": "divider.centre",
+   "material": "hardwood_oak",
+   "notes": "Separates the two door bays, 873 mm clear each side.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.6,
+     "name": "length",
+     "note": "873 mm bay less clearance; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 865.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "depth",
+     "note": "Less back panel and clearance; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 420.0
+    },
+    {
+     "confidence": 0.8,
+     "name": "thickness",
+     "note": "Taken as the stated carcass panel thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Adjustable cupboard shelf",
+   "id": "shelf.adjustable",
+   "material": "hardwood_oak",
+   "notes": "Assumed one shelf per cupboard bay; the sheet does not mention internal shelving.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.7,
+     "name": "height",
+     "note": "423 mm clear opening less 3 mm reveal top and bottom.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 417.0
+    },
+    {
+     "confidence": 0.65,
+     "name": "width",
+     "note": "873 mm clear opening less 3 mm reveal each side.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 867.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "thickness",
+     "note": "Stated door thickness.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 18.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "front fixing method",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 1.0
+    }
+   ],
+   "display_name": "Cupboard door",
+   "id": "door",
+   "material": "hardwood_oak",
+   "notes": "Door sizes derived from the overall width, the stated panel thickness and an assumed 3 mm uniform reveal; they change if the doors are overlay rather than inset.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "surface"
+  },
+  {
+   "count": 3,
+   "dimensions": [
+    {
+     "confidence": 0.6,
+     "name": "width",
+     "note": "576 mm drawer bay less 3 mm reveal each side.",
+     "source": "derived",
+     "unit": "mm",
+     "value": 570.0
+    },
+    {
+     "confidence": 0.97,
+     "name": "height",
+     "note": "Stated drawer front height.",
+     "source": "pdf_text_layer",
+     "unit": "mm",
+     "value": 180.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "thickness",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 18.0
+    }
+   ],
+   "display_name": "Drawer front",
+   "id": "drawer.front",
+   "material": "hardwood_oak",
+   "notes": "Three fronts in a row across the top of the carcass; row layout is an assumption from '3 drawers, 180 mm front height'.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "surface"
+  },
+  {
+   "count": 6,
+   "dimensions": [
+    {
+     "confidence": 1.0,
+     "name": "length",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 400.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "height",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 120.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "thickness",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 12.0
+    }
+   ],
+   "display_name": "Drawer side",
+   "id": "drawer.side",
+   "material": "hardwood_oak",
+   "notes": "Two per drawer, six in total. Part of the drawer box (front, sides, back, base, runners, handle).",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 3,
+   "dimensions": [
+    {
+     "confidence": 0.5,
+     "name": "width",
+     "note": "Fits between the two drawer sides.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 516.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "height",
+     "note": "Matches the drawer side height.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 150.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "thickness",
+     "note": "Matches the drawer side thickness.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 12.0
+    }
+   ],
+   "display_name": "Drawer back",
+   "id": "drawer.back",
+   "material": "hardwood_oak",
+   "notes": "Part of the drawer box.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 3,
+   "dimensions": [
+    {
+     "confidence": 0.5,
+     "name": "length",
+     "note": "Between the drawer sides.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 516.0
+    },
+    {
+     "confidence": 0.5,
+     "name": "depth",
+     "note": "Set into grooves in the sides, so shorter than the drawer side length.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 380.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "thickness",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 6.0
+    }
+   ],
+   "display_name": "Drawer base panel",
+   "id": "drawer.base",
+   "material": "hardwood_oak",
+   "notes": "Part of the drawer box; sits in grooves in the two sides and the back.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "structural"
+  },
+  {
+   "count": 6,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "length",
+     "note": "Assumed to match the drawer box depth; type and length not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 400.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "height",
+     "note": "Typical side-mounted slide; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 45.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "thickness",
+     "note": "Typical side-mounted slide stack; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 13.0
+    }
+   ],
+   "display_name": "Drawer runner",
+   "id": "runner.drawer",
+   "material": "steel",
+   "notes": "Three pairs, one per drawer. Assumed metal side-mounted slides; a solid oak piece might instead use wooden runners, which would change the drawer box and the cut list.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "hardware"
+  },
+  {
+   "count": 3,
+   "dimensions": [
+    {
+     "confidence": 0.3,
+     "name": "length",
+     "note": "Bar handle length guessed; nothing stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 160.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "diameter",
+     "note": "Guess.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 12.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "handle length and fixing centres",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 160.0
+    }
+   ],
+   "display_name": "Drawer handle",
+   "id": "handle.drawer",
+   "material": "metal_brass",
+   "notes": "Type, size and fixing centres are not given; only that each drawer has a pull.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "hardware"
+  },
+  {
+   "count": 2,
+   "dimensions": [
+    {
+     "confidence": 0.3,
+     "name": "length",
+     "note": "Guessed to match the drawer handles; nothing stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 160.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "diameter",
+     "note": "Guess.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 12.0
+    }
+   ],
+   "display_name": "Door handle or knob",
+   "id": "handle.door",
+   "material": "metal_brass",
+   "notes": "Assumed one pull per door; a knob rather than a bar would be equally likely.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "hardware"
+  },
+  {
+   "count": 4,
+   "dimensions": [
+    {
+     "confidence": 0.3,
+     "name": "height",
+     "note": "Typical butt hinge size; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 60.0
+    },
+    {
+     "confidence": 0.3,
+     "name": "width",
+     "note": "Typical butt hinge size; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 35.0
+    }
+   ],
+   "display_name": "Door hinge",
+   "id": "hinge",
+   "material": "steel",
+   "notes": "Two hinges per door assumed; inset oak doors would normally use butt hinges rather than concealed cup hinges.",
+   "parent_id": "",
+   "primitive": "box",
+   "role": "hardware"
+  },
+  {
+   "count": 4,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "diameter",
+     "note": "Assumed; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 40.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "height",
+     "note": "Assumed to sit recessed inside the 150 mm leg height; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 10.0
+    },
+    {
+     "confidence": 1.0,
+     "name": "presence and height",
+     "note": "Answered by the user.",
+     "source": "user",
+     "unit": "mm",
+     "value": 10.0
+    }
+   ],
+   "display_name": "Levelling glide / foot",
+   "id": "glide",
+   "material": "nylon_glide",
+   "notes": "One under each leg. If glides add height beyond 150 mm, the legs must be shortened to keep the 820 mm overall height.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "hardware"
+  },
+  {
+   "count": 8,
+   "dimensions": [
+    {
+     "confidence": 0.4,
+     "name": "diameter",
+     "note": "Typical shelf pin; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 5.0
+    },
+    {
+     "confidence": 0.4,
+     "name": "length",
+     "note": "Typical shelf pin; not stated.",
+     "source": "estimated",
+     "unit": "mm",
+     "value": 12.0
+    }
+   ],
+   "display_name": "Shelf pin",
+   "id": "pin.shelf",
+   "material": "steel",
+   "notes": "Four per adjustable shelf, two shelves assumed.",
+   "parent_id": "",
+   "primitive": "cylinder",
+   "role": "hardware"
+  }
+ ],
+ "readability": {
+  "labels_found": true,
+  "notes": "Only page 1 of 2 was supplied and it is a text-only specification sheet: it lists dimensions but contains no drawing, photograph or view of the sideboard, so no part of the object is visible to crop. Every dimension used here therefore comes from the PDF text layer. No geometry, joinery or layout is shown, which is why several structural parts (leg rails, dividers, drawer boxes, hardware) are inferred from the stated overall size and typical sideboard construction. Page 2 may contain a drawing and should be checked before the model is finalised."
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/UserPoolId",
+  "/properties/ProviderName",
+  "/properties/ProviderType"
+ ],
+ "description": "Resource Type definition for AWS::Cognito::UserPoolIdentityProvider",
+ "handlers": {
+  "create": {
+   "permissions": [
+    "cognito-idp:CreateIdentityProvider",
+    "cognito-idp:DescribeIdentityProvider"
+   ],
+   "timeoutInMinutes": 2
+  },
+  "delete": {
+   "permissions": [
+    "cognito-idp:DeleteIdentityProvider",
+    "cognito-idp:DescribeIdentityProvider"
+   ],
+   "timeoutInMinutes": 2
+  },
+  "list": {
+   "handlerSchema": {
+    "properties": {
+     "UserPoolId": {
+      "$ref": "resource-schema.json#/properties/UserPoolId"
+     }
+    },
+    "required": [
+     "UserPoolId"
+    ]
+   },
+   "permissions": [
+    "cognito-idp:ListIdentityProviders"
+   ]
+  },
+  "read": {
+   "permissions": [
+    "cognito-idp:DescribeIdentityProvider"
+   ]
+  },
+  "update": {
+   "permissions": [
+    "cognito-idp:UpdateIdentityProvider",
+    "cognito-idp:DescribeIdentityProvider"
+   ],
+   "timeoutInMinutes": 2
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/UserPoolId",
+  "/properties/ProviderName"
+ ],
+ "properties": {
+  "AttributeMapping": {
+   "additionalProperties": false,
+   "format": "json",
+   "patternProperties": {
+    "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "IdpIdentifiers": {
+   "items": {
+    "maxLength": 40,
+    "minLength": 1,
+    "pattern": "^[\\w\\s+=.@-]+$",
+    "type": "string"
+   },
+   "maxItems": 50,
+   "minItems": 0,
+   "type": "array"
+  },
+  "ProviderDetails": {
+   "additionalProperties": false,
+   "format": "json",
+   "patternProperties": {
+    "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ProviderName": {
+   "maxLength": 32,
+   "minLength": 1,
+   "pattern": "^[^_\\p{Z}][\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}][^_\\p{Z}]+$",
+   "type": "string"
+  },
+  "ProviderType": {
+   "enum": [
+    "Facebook",
+    "Google",
+    "LoginWithAmazon",
+    "OIDC",
+    "SAML",
+    "SignInWithApple"
+   ],
+   "type": "string"
+  },
+  "UserPoolId": {
+   "maxLength": 55,
+   "minLength": 1,
+   "pattern": "^[\\w-]+_[0-9a-zA-Z]+$",
+   "type": "string"
+  }
+ },
+ "required": [
+  "UserPoolId",
+  "ProviderName",
+  "ProviderType",
+  "ProviderDetails"
+ ],
+ "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "tagOnCreate": false,
+  "tagUpdatable": false,
+  "taggable": false
+ },
+ "typeName": "AWS::Cognito::UserPoolIdentityProvider"
+}
